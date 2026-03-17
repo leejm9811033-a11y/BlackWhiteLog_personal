@@ -1,0 +1,402 @@
+/* =========================
+#### 음식점 상세 판넬 -0312
+========================= */
+.detail-panel {
+    position: absolute;
+    /* 1. 위아래 헤더/푸터 공간 확보 (기존 왼쪽 패널 여백과 동일하게 조절 가능) */
+    top: 16px; 
+    height: calc(100% - 32px); 
+    
+    /* 2. 지도 탭 내에서 왼쪽 패널과의 이격(Gap) 확보 */
+    left: 16px; 
+    width: 380px;
+    
+    background-color: var(--panel);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    
+    /* 3. 둥근 모서리 및 그림자 (style.css의 기존 변수 활용) */
+    border-radius: var(--radius-lg); 
+    border: 1px solid var(--line);
+    overflow: hidden; /* 내부 이미지나 헤더가 둥근 모서리를 튀어나오지 않게 함 */
+    box-shadow: var(--shadow); 
+    
+    transition: transform 0.3s ease;
+}
+
+.detail-panel.hidden {
+    display: none;
+}
+
+.detail-header {
+    position: relative;
+}
+
+.detail-main-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background-color: var(--chip);
+}
+
+.detail-title {
+    padding: 16px;
+    margin: 0;
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.back-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    padding: 8px 12px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.detail-nav {
+    display: flex;
+    border-bottom: 1px solid var(--line);
+}
+
+.tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 12px 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--subtext);
+}
+
+.tab-btn.active {
+    color: var(--point-dark);
+    border-bottom: 3px solid var(--point-dark);
+}
+
+.detail-content {
+    padding: 16px;
+    flex: 1;
+    overflow-y: auto; /* 내용이 길어지면 스크롤 생성 */
+}
+
+.tab-pane.hidden {
+    display: none;
+}
+
+/* 리뷰 폼 컨테이너 */
+.review-write-form {
+    background-color: var(--surface);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+}
+
+/* 별점 애니메이션 */
+.star-input-wrap {
+    font-size: 32px;
+    color: #e0e0e0;
+    cursor: pointer;
+    display: inline-block;
+}
+.star-input-wrap .star.active { color: #ffb300; }
+
+/* 입력 영역 숨김 처리 */
+#reviewInputArea.hidden { display: none; }
+
+#reviewContent {
+    width: 100%; height: 90px; padding: 12px;
+    border: 1px solid var(--line); border-radius: 6px;
+    resize: none; margin-bottom: 12px;
+    font-family: inherit; box-sizing: border-box;
+}
+
+/* 폼 하단 액션 영역 */
+.review-form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 첨부 글자 스타일 */
+.btn-attach {
+    color: #a0a0a0;
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 6px 4px;
+}
+
+/* 리뷰 등록 버튼 (크기 축소 및 위치 조정) */
+.btn-submit {
+    background-color: var(--point);
+    color: white; border: none;
+    padding: 6px 14px;
+    font-size: 13px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-right: 8px; /* 왼쪽으로 살짝 이동시키기 위한 여백 */
+}
+
+
+/* 가로 스크롤 미리보기 컨테이너 */
+.preview-slider {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    padding: 5px 0 15px 0;
+    scrollbar-width: thin; /* 파이어폭스용 얇은 스크롤바 */
+}
+
+/* 스크롤바 디자인 (웹킷 브라우저) */
+.preview-slider::-webkit-scrollbar {
+    height: 4px;
+}
+.preview-slider::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 10px;
+}
+
+/* 미리보기 개별 이미지 */
+.preview-item {
+    position: relative;
+    flex-shrink: 0; /* 이미지 크기 유지 */
+}
+
+.preview-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+}
+
+/* 개별 이미지 삭제 버튼 */
+.remove-img-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--point);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+}
+
+/* 댓글 리스트 내 이미지 갤러리 */
+.comment-image-gallery {
+    display: flex; /* 강제 노출 */
+    gap: 10px;
+    overflow-x: auto;
+    margin-top: 6px;
+    min-height: 120px; /* 최소 높이 지정 */
+    margin-top: 15px;
+}
+
+.comment-img-item {
+    width: 130px; /* 기존보다 살짝 키우면 더 시원해 보입니다 */
+    height: 130px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+    border: 1px solid var(--line);
+}
+
+/* 스크롤바 디자인 (댓글 갤러리용) */
+.comment-image-gallery::-webkit-scrollbar {
+    height: 4px;
+}
+.comment-image-gallery::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+/* 리뷰 카드 레이아웃 정리 */
+.review-item-card {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+}
+.review-user-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.user-profile-group { display: flex; align-items: center; gap: 10px; }
+.user-thumb { width: 32px; height: 32px; border-radius: 50%; background-size: cover; }
+.review-rating-stars { color: #ffb300; margin-bottom: 8px; }
+.review-text-content { line-height: 1.6; color: var(--text); white-space: pre-wrap; }
+
+
+/* =========================
+   리뷰 삭제 버튼 & 말풍선 UI
+========================= */
+/* 감싸는 영역 */
+.review-action-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+/* 삭제 버튼 (쓰레기통 아이콘 + 텍스트) */
+.btn-review-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--subtext);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-review-delete:hover {
+    background: #ffebee; /* 연한 빨간 배경 */
+    color: #e53935;      /* 빨간 글씨 */
+    border-color: #ffcdd2;
+}
+
+.btn-review-delete svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+}
+
+/* 삭제 확인 말풍선 (기본 숨김) */
+.delete-confirm-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 180px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+}
+
+/* 말풍선 보이기 클래스 */
+.delete-confirm-popover.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* 말풍선 위쪽 뾰족한 꼬리 */
+.delete-confirm-popover::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 20px;
+    width: 10px;
+    height: 10px;
+    background: var(--panel);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    transform: rotate(45deg);
+}
+
+/* 말풍선 안의 글씨와 버튼 */
+.delete-confirm-popover p {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    color: var(--text);
+    text-align: center;
+    font-weight: bold;
+}
+
+.popover-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.popover-actions button {
+    flex: 1;
+    padding: 8px 0;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    transition: all 0.2s ease;
+}
+
+.btn-popover-cancel {
+    background: var(--chip);
+    color: var(--subtext);
+}
+.btn-popover-cancel:hover {
+    background: #e2e6db;
+    color: var(--text);
+}
+
+.btn-popover-confirm {
+    background: #e53935;
+    color: white;
+    border-color: #e53935;
+}
+.btn-popover-confirm:hover {
+    background: #c62828;
+}
+
+/* =========================
+   방문 미인증 말풍선
+========================= */
+.not-visited-popover {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: #333;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 10;
+    pointer-events: none;
+}
+.not-visited-popover.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-4px);
+}
+.not-visited-popover::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+}
+.star-input-wrap { position: relative; }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>업적 / 랭킹</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
+</head>
+<body>
+    <div class="mypage-detail-page">
+        <div class="mypage-detail-container">
+            <div class="mypage-detail-header">
+                <div>
+                    <h1>업적 / 랭킹</h1>
+                    <p>{{ user_nickname }}님의 업적 현황입니다.</p>
+                </div>
+                <a href="{{ url_for('mypage.mypage') }}" class="mypage-back-btn">마이페이지로</a>
+            </div>
+
+            <div class="mypage-detail-list">
+                {% if achievements %}
+                    {% for item in achievements %}
+                        <div class="mypage-detail-card">
+                            <div class="mypage-detail-top">
+                                <strong>{{ item.title }}</strong>
+                                <span>
+                                    {% if item.achieved %}
+                                        달성 완료
+                                    {% else %}
+                                        미달성
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <p>{{ item.description }}</p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="mypage-empty">업적 정보가 없습니다.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% if mode == "create" %}
+            관리자 - 음식점 등록
+        {% else %}
+            관리자 - 음식점 수정
+        {% endif %}
+    </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_restaurants.css') }}">
+</head>
+<body>
+    <div class="admin-page">
+        <div class="admin-container admin-form-container">
+            <div class="admin-header">
+                <h1>
+                    {% if mode == "create" %}
+                        음식점 등록
+                    {% else %}
+                        음식점 수정
+                    {% endif %}
+                </h1>
+                <p>음식점 정보를 입력해주세요.</p>
+            </div>
+
+            <!-- flash 메시지 -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-wrap">
+                        {% for message in messages %}
+                            <div class="flash-message">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="admin-form">
+                <label for="restaurant_name">음식점 이름</label>
+                <input
+                    type="text"
+                    id="restaurant_name"
+                    name="restaurant_name"
+                    value="{{ restaurant.restaurant_name if restaurant else '' }}"
+                    required
+                >
+
+                <label for="restaurant_category_id">카테고리</label>
+                <select id="restaurant_category_id" name="restaurant_category_id">
+                    {% for category in categories %}
+                        <option
+                            value="{{ category.restaurant_category_id }}"
+                            {% if restaurant and restaurant.restaurant_category_id == category.restaurant_category_id %}
+                                selected
+                            {% endif %}
+                        >
+                            {{ category.restaurant_category_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <label for="region_sigungu">지역</label>
+                <input
+                    type="text"
+                    id="region_sigungu"
+                    name="region_sigungu"
+                    value="{{ restaurant.region_sigungu if restaurant else '' }}"
+                >
+
+                <label for="address">주소</label>
+                <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value="{{ restaurant.address if restaurant else '' }}"
+                >
+
+                <label for="phone">전화번호</label>
+                <input
+                    type="text"
+                    id="phone"
+                    name="phone"
+                    value="{{ restaurant.phone if restaurant else '' }}"
+                >
+
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">
+                        {% if mode == "create" %}
+                            등록하기
+                        {% else %}
+                            수정하기
+                        {% endif %}
+                    </button>
+
+                    <a href="{{ url_for('admin.admin_restaurants') }}" class="cancel-btn">
+                        목록으로
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

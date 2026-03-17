@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>흑백로그</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <!--#### restaurant_panel css 스타일시트-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/restaurant_panel.css') }}" />
+    <!--#### restaurant_panel css 스타일시트-->
+    <!--#### 랭크 css 스타일시트-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/user_ranking.css') }}" />
+    <!--#### 랭크 css 스타일시트-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mainrank.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/visit.css') }}" />
+    
+</head>
+<body>
+    <script
+    type="text/javascript"
+    src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=bixef1lnm8&submodules=geocoder"
+    ></script>  <!-- 이종민: 수정한 부분 네이버 지도 -->
+    <div class="app-shell">
+        <header class="topbar">
+            <div class="brand-wrap">
+                <a href="/">
+                    <img
+                        id="main_logo"
+                        src="{{ url_for('static', filename='img/main_logo.png') }}"
+                        alt="흑백로그 로고"
+                        class="brand-logo-img"
+                    />
+                </a>
+            </div>
+
+            <section class="searchbar-section">
+                <div class="searchbar-box">
+                    <select id="regionSelect" class="search-select">
+                        {% for region in regions %}
+                        <option value="{{ region }}">{{ region }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <select id="categorySelect" class="search-select">
+                        <option value="">전체 카테고리</option>
+                        {% for c in categories %}
+                        <option value="{{ c.restaurant_category_id }}">
+                            {{ c.restaurant_category_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <div class="search-input-wrap">
+                        <input
+                            type="text"
+                            id="keywordInput"
+                            class="search-input"
+                            placeholder="음식점명, 주소, 카테고리 검색"
+                            autocomplete="off"
+                        />
+                        <div id="searchSuggestionBox" class="search-suggestion-box" hidden></div>
+                    </div>
+
+                    <button id="searchBtn" class="search-btn">검색</button>
+                </div>
+            </section>
+
+<div class="topbar-actions">
+    {% if user_email %}
+        <button class="ghost-btn visit-stamp-btn" id="visitStampBtn" type="button">도장 찍기</button>
+
+        <div class="profile-menu-wrap">
+            <button class="user-profile-chip" id="profileToggle" type="button">
+                <span class="user-profile-chip__name">{{ user_nickname }}</span>
+                <span class="user-profile-chip__avatar">
+                    <img src="{{ url_for('static', filename='img/main_logo.png') }}" alt="profile">
+                </span>
+            </button>
+
+            <div class="profile-dropdown" id="profileDropdown">
+                <a href="{{ url_for('mypage.mypage') }}" class="profile-dropdown__item">마이페이지</a>
+                <a href="{{ url_for('login.logout') }}" class="profile-dropdown__item profile-dropdown__item--danger">로그아웃</a>
+            </div>
+        </div>
+    {% else %}
+        <a href="{{ url_for('login.login') }}" class="ghost-btn login-link">로그인</a>
+    {% endif %}
+
+    <button class="icon-btn" id="menuBtn" aria-label="메뉴" type="button">☰</button>
+</div>
+
+        </header>
+
+
+        
+        <main class="content-grid">
+            <aside class="sidebar">
+
+                {% if user_email %}
+                    {% include 'ranking/ranking_summary.html' %}
+                {% endif %}
+
+                <div class="sidebar-head">
+                    <div class="sidebar-top-row">
+                        <div class="sort-chip-row">
+                            <button class="sort-chip active" data-sort="visits">추천</button>
+                            <button class="sort-chip" data-sort="rating">랭킹</button>
+                            <button class="sort-chip" data-sort="latest">즐겨찾기</button>
+                        </div>
+
+                        <button
+                            class="roulette-btn"
+                            id="rouletteBtn"
+                            title="랜덤 추천"
+                            aria-label="랜덤 추천"
+                            type="button"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="12" height="12" x="2" y="10" rx="2" ry="2"></rect>
+                                <path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"></path>
+                                <path d="M6 18h.01"></path>
+                                <path d="M10 14h.01"></path>
+                                <path d="M15 6h.01"></path>
+                                <path d="M18 9h.01"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div id="rouletteResult" class="roulette-result" hidden>
+                        <button
+                            type="button"
+                            class="roulette-result__close"
+                            id="rouletteCloseBtn"
+                            aria-label="추천 박스 닫기"
+                            title="닫기"
+                        >
+                            
+                        </button>
+
+                        <div class="roulette-result__badge">랜덤 추천</div>
+
+                        <div class="roulette-result__body roulette-result__body--stack">
+                            <div class="roulette-result__text">
+                                <div class="roulette-slot" id="rouletteSlot">
+                                    <div class="roulette-slot__track" id="rouletteSlotTrack">
+                                        <div class="roulette-slot__item">한식</div>
+                                    </div>
+                                </div>
+
+                                <p id="rouletteQuestion">이 카테고리 음식점을 추천해드릴까요?</p>
+                                <span id="rouletteDesc">주사위를 다시 눌러도 다른 카테고리를 추천받을 수 있어요.</span>
+                            </div>
+
+                            <div class="roulette-result__actions">
+                                <button class="roulette-result__confirm" id="rouletteConfirmBtn" type="button">
+                                    음식점 추천받기
+                                </button>
+                                <button class="roulette-result__retry" id="rouletteRetryBtn" type="button">
+                                    다시 뽑기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="restaurantList" class="restaurant-list">
+                    <div class="loading-box">음식점 데이터를 불러오는 중...</div>
+                </div>
+            </aside>
+
+            <section class="map-panel">
+                <div class="map-notice" id="mapNotice">
+                    <div class="map-notice__content">
+                        <strong class="map-notice__title">공지사항</strong>
+                        <p class="map-notice__text">
+                            현재 지도 기능은 준비 중입니다. 검색 및 랭킹 기능은 정상적으로 이용할 수 있습니다.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="map-notice__toggle"
+                        id="mapNoticeToggle"
+                        aria-label="공지사항 접기"
+                        aria-expanded="true"
+                    >
+                        <img
+                            src="{{ url_for('static', filename='img/notice.png') }}"
+                            alt="공지사항 펼치기"
+                            class="map-notice__toggle-img"
+                            id="mapNoticeToggleImg"
+                        />
+                    </button>
+                </div>
+                <!--#### 레스토랑 판넬 -->
+                {% include 'restaurant_panel.html' %}
+                <!--#### 레스토랑 판넬 -->
+                <!--#### 랭킹-->
+                {% include 'ranking/user_ranking.html' %}
+                <!--#### 랭킹-->
+                <div id="mapCanvas" class="map-canvas">
+                    <div id="naverMap" class="naver-map"></div>
+
+                    <div class="map-grid"></div>
+                    <div id="mapMarkers" class="map-markers"></div>
+                </div>  <!-- 이종민 수정한 부분 -->
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <strong>흑백로그</strong>
+                    <span>Black & White Log</span>
+                </div>
+
+                <div class="footer-info">
+                    <p>© 2026 흑백로그. All rights reserved.</p>
+                    <p>
+                        본 사이트의 상호, 이미지, 리뷰 및 기타 콘텐츠는 각 권리자에게 권리가 있을 수 있으며,
+                        서비스 내 데이터는 업데이트 시점에 따라 실제 정보와 차이가 있을 수 있습니다.
+                    </p>
+                    <p>
+                        지도 및 위치 기반 서비스는 제휴 API 정책 및 각 제공사의 이용약관을 따릅니다.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <div class="side-drawer-backdrop" id="sideDrawerBackdrop" hidden></div>
+
+    <aside class="side-drawer" id="sideDrawer" aria-hidden="true">
+    <div class="side-drawer__header">
+        <button
+            type="button"
+            class="side-drawer__close"
+            id="sideDrawerCloseBtn"
+            aria-label="메뉴 닫기"
+        >
+            ×
+        </button>
+
+        {% if user_email %}
+            <a href="{{ url_for('mypage.mypage') }}" class="side-drawer__profile">
+                <div class="side-drawer__avatar">
+                    <span>👤</span>
+                </div>
+                <strong class="side-drawer__name">
+                    {{ user_nickname }}
+                </strong>
+            </a>
+        {% else %}
+            <a href="{{ url_for('login.login') }}" class="side-drawer__profile">
+                <div class="side-drawer__avatar">
+                    <span>👤</span>
+                </div>
+                <strong class="side-drawer__name">
+                    로그인 해주세요
+                </strong>
+            </a>
+        {% endif %}
+    </div>
+
+    <div class="side-drawer__body">
+        <nav class="side-drawer__nav">
+            <button type="button" class="side-drawer__item">
+                <span class="side-drawer__icon">🔔</span>
+                <span>공지사항</span>
+            </button>
+
+            {% if user_email %}
+                <a href="{{ url_for('login.logout') }}" class="side-drawer__item side-drawer__item--link">
+                    <span class="side-drawer__icon">↪</span>
+                    <span>로그아웃</span>
+                </a>
+            {% else %}
+                <a href="{{ url_for('login.login') }}" class="side-drawer__item side-drawer__item--link">
+                    <span class="side-drawer__icon">→</span>
+                    <span>로그인</span>
+                </a>
+            {% endif %}
+        <!-- 수정! owner_id 존재시 판매자 페이지 이동 -->
+            {% if is_owner %}
+                <a href="{{ url_for('owner_board') }}" class="side-drawer__item side-drawer__item--link" id="sellerRegisterBtn">
+                    <span class="side-drawer__icon">🏪</span>
+                    <span>판매자 페이지 이동</span>
+                </a>
+            {% else %}
+                <button type="button" class="side-drawer__item" id="sellerRegisterBtn">
+                    <span class="side-drawer__icon">🏪</span>
+                    <span>판매자 등록하기</span>
+                </button>
+            {% endif %}
+            <!-- 수정! owner_id 존재하지 않을시 판매자 페이지 이동 -->
+        </nav>
+
+        <div class="side-drawer__divider"></div>
+
+        <div class="side-drawer__section-title">기타</div>
+
+        <div class="side-drawer__sublist">
+            <a href="{{ url_for('mypage.mypage') }}">
+                <button type="button" class="side-drawer__subitem">설정</button>
+            </a>
+            <button type="button" class="side-drawer__subitem">고객센터</button>
+            <button type="button" class="side-drawer__subitem">이용약관</button>
+        </div>
+    </div>
+</aside>
+
+    
+    {% include 'visit/receipt_modal.html' %}
+    <script>
+        window.__INITIAL_STATE__ = {
+            apiUrl: "{{ url_for('api_restaurants') }}",
+            favoritesApiUrl: "{{ url_for('api_favorites') }}",
+            favoriteToggleBaseUrl: "/api/favorites",
+            loginUrl: "{{ url_for('login.login') }}",
+            isLoggedIn: {{ 'true' if user_id else 'false' }},
+            userId: {{ user_id if user_id else 'null' }},
+            visitReceiptApiUrl: "{{ url_for('visit.register_visit_by_receipt') }}"
+        };
+    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pages/visit.js') }}"></script>
+    <!--####레스토랑 판넬 js-->
+    <script src="{{ url_for('static', filename='js/pages/restaurant_panel.js') }}"></script>
+    <!--####레스토랑 판넬 js-->
+    <!--####랭킹 js-->
+    <script src="{{ url_for('static', filename='js/pages/user_ranking.js') }}"></script>
+    <!--####랭킹 js-->
+</body>
+</html>

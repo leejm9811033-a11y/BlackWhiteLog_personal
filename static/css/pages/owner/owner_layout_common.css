@@ -1,0 +1,293 @@
+@charset "UTF-8";
+
+/* =========================
+   공통 헤더 / 푸터 전용 변수
+========================= */
+:root {
+    --layout-line: #e7e9e3;
+    --layout-text: #222222;
+    --layout-sub-text: #666666;
+    --layout-point: #9caf7f;
+    --layout-point-dark: #82956a;
+    --layout-point-light: #eef3e8;
+    --layout-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================
+   공통 링크 / 버튼 초기화
+========================= */
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =========================
+   공통 헤더
+========================= */
+.top-header {
+    height: 94px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #edf0ea;
+    border-radius: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    margin: 20px auto 22px;
+    width: min(1380px, calc(100% - 32px));
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 46px;
+}
+
+.brand-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+}
+
+.main-logo {
+    height: 75px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.today-date {
+    color: #707070;
+    font-size: 1.1rem;
+}
+
+.store-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.store-name {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--layout-text);
+    letter-spacing: 0;
+}
+
+.profile-circle {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #f3ede6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    border: 1px solid #e7e1d9;
+    flex-shrink: 0;
+}
+
+.menu-toggle {
+    width: 54px;
+    height: 54px;
+    border: 1px solid #d9ddd4;
+    border-radius: 18px;
+    font-size: 1.8rem;
+    color: #333;
+    background: #fff;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.menu-toggle:hover {
+    border-color: var(--layout-point);
+    background: var(--layout-point-light);
+}
+
+/* =========================
+   공통 푸터
+========================= */
+.site-footer {
+    margin-top: 22px;
+    margin-bottom: 20px;
+    padding: 22px 28px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--layout-line);
+    border-radius: 24px;
+    box-shadow: var(--layout-shadow);
+    width: min(1380px, calc(100% - 32px));
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 180px;
+}
+
+.footer-brand strong {
+    font-size: 1.1rem;
+    color: var(--layout-text);
+}
+
+.footer-brand span {
+    font-size: 0.95rem;
+    color: var(--layout-sub-text);
+}
+
+.footer-info {
+    flex: 1;
+    min-width: 280px;
+}
+
+.footer-info p {
+    margin: 0 0 8px;
+    color: var(--layout-sub-text);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.footer-info p:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================
+   공통 반응형
+========================= */
+@media (max-width: 1100px) {
+    .top-header {
+        height: 94px;
+        padding: 0 20px;
+        gap: 12px;
+    }
+
+    .header-left {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .header-right {
+        width: auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: nowrap;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .store-profile {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .store-name {
+        font-size: 1rem;
+        white-space: nowrap;
+    }
+
+    .today-date {
+        display: none;
+    }
+
+    .main-logo {
+        height: 58px;
+        width: auto;
+        max-width: 180px;
+        object-fit: contain;
+    }
+
+    .profile-circle {
+        width: 42px;
+        height: 42px;
+        font-size: 1.35rem;
+    }
+
+    .menu-toggle {
+        width: 42px;
+        height: 42px;
+        font-size: 1.4rem;
+        border-radius: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-header {
+        height: 82px;
+        padding: 0 14px;
+        gap: 8px;
+    }
+
+    .main-logo {
+        height: 46px;
+        max-width: 140px;
+    }
+
+    .store-name {
+        font-size: 0.92rem;
+        max-width: 72px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .profile-circle {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+
+    .menu-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 1.15rem;
+    }
+
+    .header-right {
+        gap: 6px;
+    }
+
+    .site-footer {
+        padding: 18px 18px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .footer-brand,
+    .footer-info {
+        min-width: 100%;
+    }
+}

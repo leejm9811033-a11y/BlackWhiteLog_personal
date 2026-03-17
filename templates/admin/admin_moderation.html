@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신고 / 제재 관리</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_manage.css') }}">
+</head>
+<body>
+    <div class="admin-page">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>신고 / 제재 관리</h1>
+                <p>신고 내역 확인, 신고 처리, 회원 제재 등록 및 해제를 한 화면에서 관리할 수 있습니다.</p>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-wrap">
+                        {% for message in messages %}
+                            <div class="flash-message">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- 제재 등록 -->
+            <div class="admin-form-card">
+                <h2>제재 등록</h2>
+                <form action="{{ url_for('admin.admin_moderation') }}" method="POST" class="admin-form">
+                    <div>
+                        <label for="user_nickname">대상 닉네임</label>
+                        <input type="text" id="user_nickname" name="user_nickname" required>
+                    </div>
+
+                    <div>
+                        <label for="sanction_type">제재 종류</label>
+                        <select id="sanction_type" name="sanction_type" required>
+                            <option value="">선택</option>
+                            <option value="WARNING">WARNING</option>
+                            <option value="SUSPENSION">SUSPENSION</option>
+                            <option value="BAN">BAN</option>
+                        </select>
+                    </div>
+
+                    <div class="full">
+                        <label for="reason">사유</label>
+                        <textarea id="reason" name="reason" required></textarea>
+                    </div>
+
+                    <div>
+                        <label for="expire_at">만료일</label>
+                        <input type="text" id="expire_at" name="expire_at" placeholder="예: 2026-03-20 또는 비워두기">
+                    </div>
+
+                    <div style="display:flex; align-items:end;">
+                        <button type="submit" class="primary-btn">제재 등록</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 신고 목록 -->
+            <div class="admin-header" style="margin-top: 28px;">
+                <h1 style="font-size: 24px; margin-bottom: 0;">신고 목록</h1>
+            </div>
+
+            <div class="admin-topbar">
+                <form method="GET" action="{{ url_for('admin.admin_moderation') }}" class="search-form">
+                    <input type="text" name="report_keyword" value="{{ report_keyword }}" placeholder="신고자 / 대상 / 사유 검색">
+                    <select name="report_status">
+                        <option value="">전체 상태</option>
+                        <option value="PENDING" {% if report_status == 'PENDING' %}selected{% endif %}>PENDING</option>
+                        <option value="RESOLVED" {% if report_status == 'RESOLVED' %}selected{% endif %}>RESOLVED</option>
+                        <option value="REJECTED" {% if report_status == 'REJECTED' %}selected{% endif %}>REJECTED</option>
+                    </select>
+
+                    <!-- 제재 검색값 유지 -->
+                    <input type="hidden" name="sanction_keyword" value="{{ sanction_keyword }}">
+                    <input type="hidden" name="sanction_status" value="{{ sanction_status }}">
+
+                    <button type="submit">신고 검색</button>
+                </form>
+            </div>
+
+            <div class="table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>신고자</th>
+                            <th>대상</th>
+                            <th>유형</th>
+                            <th>사유</th>
+                            <th>상태</th>
+                            <th>신고일</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if reports %}
+                            {% for report in reports %}
+                                <tr>
+                                    <td>{{ report.report_id }}</td>
+                                    <td>{{ report.reporter_nickname }}</td>
+                                    <td>{{ report.target_nickname }}</td>
+                                    <td>{{ report.report_type }}</td>
+                                    <td class="left">{{ report.reason }}</td>
+                                    <td>{{ report.status }}</td>
+                                    <td>{{ report.created_at }}</td>
+                                    <td class="action-cell">
+                                        <form action="{{ url_for('admin.admin_resolve_report', report_id=report.report_id) }}" method="POST" class="inline-form">
+                                            <button type="submit" class="primary-btn">승인</button>
+                                        </form>
+                                        <form action="{{ url_for('admin.admin_reject_report', report_id=report.report_id) }}" method="POST" class="inline-form">
+                                            <button type="submit" class="danger-btn">반려</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="8" class="empty-row">신고 데이터가 없습니다.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 제재 목록 -->
+            <div class="admin-header" style="margin-top: 34px;">
+                <h1 style="font-size: 24px; margin-bottom: 0;">제재 목록</h1>
+            </div>
+
+            <div class="admin-topbar">
+                <form method="GET" action="{{ url_for('admin.admin_moderation') }}" class="search-form">
+                    <input type="text" name="sanction_keyword" value="{{ sanction_keyword }}" placeholder="닉네임 / 사유 검색">
+                    <select name="sanction_status">
+                        <option value="">전체 상태</option>
+                        <option value="ACTIVE" {% if sanction_status == 'ACTIVE' %}selected{% endif %}>ACTIVE</option>
+                        <option value="RELEASED" {% if sanction_status == 'RELEASED' %}selected{% endif %}>RELEASED</option>
+                    </select>
+
+                    <!-- 신고 검색값 유지 -->
+                    <input type="hidden" name="report_keyword" value="{{ report_keyword }}">
+                    <input type="hidden" name="report_status" value="{{ report_status }}">
+
+                    <button type="submit">제재 검색</button>
+                </form>
+            </div>
+
+            <div class="table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>대상 닉네임</th>
+                            <th>제재 종류</th>
+                            <th>사유</th>
+                            <th>만료일</th>
+                            <th>상태</th>
+                            <th>등록일</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if sanctions %}
+                            {% for sanction in sanctions %}
+                                <tr>
+                                    <td>{{ sanction.sanction_id }}</td>
+                                    <td>{{ sanction.user_nickname }}</td>
+                                    <td>{{ sanction.sanction_type }}</td>
+                                    <td class="left">{{ sanction.reason }}</td>
+                                    <td>{{ sanction.expire_at }}</td>
+                                    <td>{{ sanction.status }}</td>
+                                    <td>{{ sanction.created_at }}</td>
+                                    <td class="action-cell">
+                                        {% if sanction.status != 'RELEASED' %}
+                                            <form action="{{ url_for('admin.admin_release_sanction', sanction_id=sanction.sanction_id) }}" method="POST" class="inline-form">
+                                                <button type="submit" class="secondary-btn">해제</button>
+                                            </form>
+                                        {% else %}
+                                            <span>-</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="8" class="empty-row">제재 데이터가 없습니다.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bottom-link-wrap">
+                <a href="{{ url_for('admin.admin_page') }}" class="back-link">관리자 메인으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

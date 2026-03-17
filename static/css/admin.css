@@ -1,0 +1,178 @@
+/* =========================
+   기본 공통 설정
+   ========================= */
+
+/* 모든 요소 크기 계산 시 padding, border 포함 */
+* {
+    box-sizing: border-box;
+}
+
+/* 페이지 전체 기본 스타일 */
+body {
+    margin: 0;
+    background: #f4f6ef;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    color: #222;
+}
+
+
+/* =========================
+   관리자 페이지 전체 영역
+   ========================= */
+
+/* 바깥 여백 */
+.admin-page {
+    padding: 40px 20px;
+}
+
+/* 메인 카드 박스 */
+.admin-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #dbe2cc;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+
+/* =========================
+   상단 헤더 영역
+   ========================= */
+
+/* 상단 제목/설명/오른쪽 버튼 정렬 */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #dbe2cc;
+}
+
+/* 왼쪽 제목 묶음 */
+.admin-header-left h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 800;
+    color: #2c341f;
+}
+
+/* 설명 문구 */
+.admin-header-left p {
+    margin: 0;
+    font-size: 14px;
+    color: #687255;
+    line-height: 1.5;
+}
+
+/* 오른쪽 메인으로 버튼 */
+.admin-home-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 82px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 12px;
+    background: #edf2e3;
+    border: 1px solid #cfd8b8;
+    color: #526833;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+/* 메인으로 버튼 hover */
+.admin-home-btn:hover {
+    background: #dfe8c8;
+    color: #3f4d27;
+}
+
+
+/* =========================
+   카드 그리드 영역
+   ========================= */
+
+/* 카드 배치 */
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* 각 관리 카드 */
+.admin-card {
+    background: #ffffff;
+    border: 1px solid #dbe2cc;
+    border-radius: 22px;
+    padding: 28px 20px 20px;
+    min-height: 152px;
+}
+
+/* 카드 제목 */
+.admin-card h2 {
+    margin: 0 0 14px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #2c341f;
+}
+
+/* 카드 설명 */
+.admin-card p {
+    margin: 0 0 18px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #687255;
+}
+
+/* 카드 안 버튼 */
+.admin-card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 12px;
+    background: #8ea867;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+/* 카드 버튼 hover */
+.admin-card-btn:hover {
+    background: #7e965b;
+}
+
+/* 준비 중 버튼 느낌 */
+.admin-card-btn.is-disabled,
+.admin-card-btn[disabled] {
+    background: #edf2e3;
+    border: 1px solid #cfd8b8;
+    color: #687255;
+    cursor: default;
+    pointer-events: none;
+}
+
+
+/* =========================
+   반응형
+   ========================= */
+
+@media (max-width: 900px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

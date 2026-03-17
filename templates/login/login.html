@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>흑백로그 로그인</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+<!-- 아이콘 -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body class="login-page">
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <!-- 로고 -->
+        <div class="login-logo">
+            <img src="{{ url_for('static', filename='img/main_logo.png') }}">
+        </div>
+
+        <p class="login-desc">
+            자신만의 맛집 랭킹을 달성해보자!
+        </p>
+
+        <!-- 로그인 실패 메시지 -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="login-flash-wrap">
+            {% for message in messages %}
+            <div class="login-error">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- 로그인 -->
+        <form method="POST" action="{{ url_for('login.login') }}" class="login-form">
+
+            <div class="input-group">
+                <input type="email" name="email" placeholder="이메일">
+            </div>
+
+            <div class="input-group">
+                <input type="password" name="password" placeholder="비밀번호">
+            </div>
+
+            <button class="login-btn" type="submit">
+                로그인
+            </button>
+
+        </form>
+
+        <!-- 회원가입 -->
+        <div class="join-text">
+            처음 오셨나요?
+            <a href="{{ url_for('login.signup', mode='local') }}">회원가입하기</a>
+        </div>
+
+        <!-- 구분선 -->
+        <div class="divider">
+            <span>간편 로그인</span>
+        </div>
+
+        <!-- 소셜 로그인 -->
+        <div class="social-login">
+
+            <a href="{{ url_for('login.login_naver') }}" class="social-btn naver">
+            <img src="{{ url_for('static', filename='img/naver.png') }}" class="social-icon" alt="네이버">
+            네이버
+            </a>
+
+            <a href="{{ url_for('login.login_kakao') }}" class="social-btn kakao">
+            <img src="{{ url_for('static', filename='img/kakao.png') }}" class="social-icon" alt="카카오">
+            카카오
+            </a>
+
+            <a href="{{ url_for('login.login_google') }}" class="social-btn google">
+            <img src="{{ url_for('static', filename='img/google.png') }}" class="social-icon" alt="구글">
+            구글
+            </a>
+
+        </div>
+
+        <!-- 하단 링크 -->
+        <div class="login-links">
+
+            <a href="{{ url_for('login.find_id') }}">이메일 찾기</a>
+
+            <span>|</span>
+
+            <a href="{{ url_for('login.find_password') }}">비밀번호 찾기</a>
+
+        </div>
+
+    </div>
+
+    {% if show_social_link_modal and pending_social_link %}
+    <div class="social-link-modal-backdrop" id="socialLinkModal">
+        <div class="social-link-modal">
+            <button type="button" class="social-link-close" id="socialLinkClose" aria-label="닫기">×</button>
+
+            <div class="social-link-badge">간편 로그인 안내</div>
+
+            <h3 class="social-link-title">아직 연결된 계정이 없어요</h3>
+
+            <p class="social-link-desc">
+                <strong>{{ pending_social_link.provider }}</strong> 계정으로 로그인하셨습니다.<br>
+                기존 회원이면 현재 아이디로 로그인해서 연결하고,<br>
+                처음 이용한다면 회원가입을 진행해주세요.
+            </p>
+
+            <div class="social-link-info">
+                <div><span>이메일</span><strong>{{ pending_social_link.email }}</strong></div>
+                <div><span>닉네임</span><strong>{{ pending_social_link.nickname }}</strong></div>
+            </div>
+
+            <div class="social-link-actions">
+                <button type="button" class="social-link-btn primary" id="socialConnectExistingBtn">
+                    기존 회원 로그인 후 연결
+                </button>
+                <a href="{{ url_for('login.social_signup') }}" class="social-link-btn secondary">
+                    처음 이용해서 회원가입
+                </a>
+            </div>
+
+            <a  href="{{ url_for('login.social_cancel') }}" class="social-link-cancel">취소</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- 로그인 페이지 footer -->
+<footer class="login-footer">
+
+    <div class="login-footer-links">
+        <a href="#">이용약관</a>
+        <span>|</span>
+        <a href="#">개인정보처리방침</a>
+        <span>|</span>
+        <a href="#">책임의 한계와 법적고지</a>
+        <span>|</span>
+        <a href="#">회원정보</a>
+        <span>|</span>
+        <a href="#">고객센터</a>
+    </div>
+
+    <div class="login-footer-copy">
+        Copyright © 흑백로그 Corp. All Rights Reserved.
+    </div>
+
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("socialLinkModal");
+    const closeBtn = document.getElementById("socialLinkClose");
+    const connectExistingBtn = document.getElementById("socialConnectExistingBtn");
+    const emailInput = document.querySelector('input[name="email"]');
+
+    if (!modal) return;
+
+    function closeModalOnly() {
+        modal.classList.add("hidden");
+        if (emailInput) {
+            emailInput.focus();
+        }
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeModalOnly);
+    }
+
+    if (connectExistingBtn) {
+        connectExistingBtn.addEventListener("click", closeModalOnly);
+    }
+
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+            closeModalOnly();
+        }
+    });
+});
+</script>
+
+</body>
+</html>

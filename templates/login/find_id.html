@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이메일 찾기</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/find_account.css') }}">
+</head>
+<body>
+    <div class="find-page">
+        <div class="find-card">
+            <h1>이메일 찾기</h1>
+            <p class="find-desc">가입할 때 사용한 닉네임을 입력해주세요.</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-wrap">
+                        {% for message in messages %}
+                            <div class="flash-message">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="find-form">
+                <label for="nickname">닉네임</label>
+                <input type="text" id="nickname" name="nickname" placeholder="닉네임 입력" required>
+
+                <button type="submit" class="find-btn">이메일 찾기</button>
+            </form>
+
+            {% if found_email %}
+                <div class="result-box">
+                    <strong>가입 이메일</strong>
+                    <p>{{ found_email }}</p>
+                </div>
+            {% endif %}
+
+            <div class="bottom-links">
+                <a href="{{ url_for('login.find_password') }}">비밀번호 찾기</a>
+                <a href="{{ url_for('login.login') }}">로그인으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

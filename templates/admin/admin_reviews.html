@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 등록 가게 목록</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_manage.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>리뷰 등록 가게 목록</h1>
+        <p class="admin-subtitle">리뷰가 등록된 음식점 목록입니다.</p>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-message">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="GET" class="admin-search-form">
+            <input
+                type="text"
+                name="keyword"
+                value="{{ keyword }}"
+                placeholder="가게 이름 검색"
+                class="admin-search-input"
+            >
+            <button type="submit" class="admin-btn">검색</button>
+        </form>
+
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>가게 ID</th>
+                    <th>가게명</th>
+                    <th>리뷰 수</th>
+                    <th>관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for restaurant in restaurants %}
+                <tr>
+                    <td>{{ restaurant.restaurant_id }}</td>
+                    <td>{{ restaurant.restaurant_name }}</td>
+                    <td>{{ restaurant.review_count }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.admin_review_manage', restaurant_id=restaurant.restaurant_id) }}" class="btn-edit">
+                            리뷰 보기
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">등록된 리뷰가 있는 가게가 없습니다.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="admin-bottom-actions">
+            <a href="{{ url_for('admin.admin_page') }}" class="btn-back">관리자 메인으로 돌아가기</a>
+        </div>
+    </div>
+</body>
+</html>

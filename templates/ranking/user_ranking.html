@@ -1,0 +1,224 @@
+<div id="rankingListOverlay" class="hidden-view">
+    <div class="ranking-list-header">
+        <h3 class="ranking-list-title">🏆 실시간 랭킹</h3>
+        <span class="ranking-list-desc"></span>
+    </div>
+    
+    <div class="ranking-list-body">
+        <div class="rank-item top-rank">
+            <span class="rank-num gold">1</span>
+            <div class="rank-info">
+                <strong>미식가판다</strong>
+                <span class="rank-tier">👑 다이아</span>
+            </div>
+            <div class="rank-pts">9,850 <span>pts</span></div>
+        </div>
+        
+        <div class="rank-item my-rank-highlight">
+            <span class="rank-num silver">2</span>
+            <div class="rank-info">
+                <strong>열일하는 판다님 <span class="me-badge">ME</span></strong>
+                <span class="rank-tier">💍 플래티넘</span>
+            </div>
+            <div class="rank-pts">8,420 <span>pts</span></div>
+        </div>
+        
+        <div class="rank-item top-rank">
+            <span class="rank-num bronze">3</span>
+            <div class="rank-info">
+                <strong>맛집탐험가</strong>
+                <span class="rank-tier">💍 플래티넘</span>
+            </div>
+            <div class="rank-pts">8,100 <span>pts</span></div>
+        </div>
+
+        <div class="rank-item">
+            <span class="rank-num">4</span>
+            <div class="rank-info">
+                <strong>배고픈다람쥐</strong>
+                <span class="rank-tier">🥇 골드</span>
+            </div>
+            <div class="rank-pts">7,650 <span>pts</span></div>
+        </div>
+        
+        <div class="rank-item">
+            <span class="rank-num">5</span>
+            <div class="rank-info">
+                <strong>카레요정</strong>
+                <span class="rank-tier">🥇 골드</span>
+            </div>
+            <div class="rank-pts">7,200 <span>pts</span></div>
+        </div>
+    </div>
+</div>
+
+<div id="rankingDashboardOverlay" class="hidden-view">
+    <div class="dashboard-header">
+        <h2>🎯 나의 랭킹 대시보드</h2>
+    </div>
+    
+    <div class="dashboard-grid">
+        <div class="dash-card profile-card">
+            <div class="profile-img-wrap">
+                <div class="profile-placeholder"></div>
+            </div>
+            <h3>열일하는 판다님</h3>
+            <div class="tier-badge platinum">💍 플래티넘 티어</div>
+            <p class="tier-desc">상위 5% 미식가</p>
+        </div>
+
+        <div class="dash-card gauge-card">
+            <div class="gauge-header">
+                <h3>다음 티어까지</h3>
+                <span class="gauge-pts"><strong>8,420</strong> / 10,000</span>
+            </div>
+            <div class="gauge-labels">
+                <span>플래티넘</span>
+                <span>다이아몬드</span>
+            </div>
+            <div class="gauge-bar-bg">
+                <div class="gauge-bar-fill" style="width: 84.2%;"></div>
+            </div>
+            <p class="gauge-desc">다이아몬드 승급까지 <strong>1,580점</strong> 남았습니다!</p>
+        </div>
+
+        <div class="dash-card badge-card">
+            <div class="card-title-row">
+                <h3>⭐ 장착한 대표 뱃지</h3>
+                <button class="btn-change">변경 &gt;</button>
+            </div>
+            <div class="badge-list">
+                <div class="badge-item">
+                    <div class="badge-circle" style="border-color: #ffd54f;">🍜</div>
+                    <span>면치기 달인</span>
+                </div>
+                <div class="badge-item">
+                    <div class="badge-circle" style="border-color: #64b5f6;">🗺️</div>
+                    <span>강남구 정복자</span>
+                </div>
+                <div class="badge-item">
+                    <div class="badge-circle" style="border-color: #f06292;">📸</div>
+                    <span>포토그래퍼</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dash-card mission-card-day">
+            <h3>📅 일일 도전 과제</h3>
+            <ul class="mission-list">
+                <li class="completed">
+                    <span class="check-icon">✔️</span>
+                    <span class="mission-text">일일 출석 완료</span>
+                    <span class="mission-reward">+10 pts</span>
+                </li>
+                <li class="completed">
+                    <span class="check-icon">✔️</span>
+                    <span class="mission-text">새로운 리뷰 작성 1/1</span>
+                    <span class="mission-reward">+50 pts</span>
+                </li>
+                <li>
+                    <span class="check-icon empty"></span>
+                    <span class="mission-text">다른 사람의 피드에 좋아요 0/1</span>
+                    <span class="mission-reward">+30 pts</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dash-card mission-card-week">
+            <h3>📅 주간 도전 과제</h3>
+            <ul class="mission-list">
+                <li class="completed">
+                    <span class="check-icon">✔️</span>
+                    <span class="mission-text">주간 출석 완료</span>
+                    <span class="mission-reward">+10 pts</span>
+                </li>
+                <li>
+                    <span class="check-icon">✔️</span>
+                    <span class="mission-text">새로운 리뷰 작성 2/5</span>
+                    <span class="mission-reward">+50 pts</span>
+                </li>
+                <li>
+                    <span class="check-icon empty"></span>
+                    <span class="mission-text">다른 사람의 피드에 좋아요 3/5</span>
+                    <span class="mission-reward">+30 pts</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="loginBlurOverlay" class="login-blur-overlay hidden-view">
+        <div class="blur-content">
+            <p class="blur-message">로그인하고 내 랭킹과 일일 과제를 확인해보세요!</p>
+            <a href="{{ url_for('login.login') }}" class="blur-login-btn">로그인 하러 가기</a>
+        </div>
+    </div>
+</div>
+
+<!--뱃지 오버레이-->
+<div id="badgeChangeOverlay" class="hidden-view">
+    <div class="badge-change-header">
+        <button id="btnBackToDash" class="btn-back"><span>&lt;</span> 뒤로 가기</button>
+        <h2 class="badge-change-title">뱃지 변경</h2>
+    </div>
+    
+    <div class="badge-change-content">
+        <div class="equipped-badges-panel">
+            <h3>장착중인<br>업적</h3>
+            <div class="equipped-slots">
+                <div class="badge-slot active-slot" data-slot="1">
+                    <div class="badge-circle" style="border-color: #ffd54f; background: #fff8e1;">🍜</div>
+                </div>
+                <div class="badge-slot" data-slot="2">
+                    <div class="badge-circle" style="border-color: #64b5f6; background: #e3f2fd;">🗺️</div>
+                </div>
+                <div class="badge-slot" data-slot="3">
+                    <div class="badge-circle" style="border-color: #f06292; background: #fce4ec;">📸</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="all-badges-panel">
+            <h3>모든 업적</h3>
+            <div class="all-badges-grid">
+                <div class="badge-item-selectable equipped-mark" data-badge="🍜" data-color="#ffd54f" data-bg="#fff8e1">
+                    <div class="badge-circle" style="border-color: #ffd54f; background: #fff8e1;">🍜</div>
+                </div>
+                <div class="badge-item-selectable equipped-mark" data-badge="🗺️" data-color="#64b5f6" data-bg="#e3f2fd">
+                    <div class="badge-circle" style="border-color: #64b5f6; background: #e3f2fd;">🗺️</div>
+                </div>
+                <div class="badge-item-selectable equipped-mark" data-badge="📸" data-color="#f06292" data-bg="#fce4ec">
+                    <div class="badge-circle" style="border-color: #f06292; background: #fce4ec;">📸</div>
+                </div>
+                
+                <div class="badge-item-selectable" data-badge="🌶️" data-color="#e57373" data-bg="#ffebee">
+                    <div class="badge-circle" style="border-color: #e57373; background: #ffebee;">🌶️</div>
+                </div>
+                <div class="badge-item-selectable" data-badge="🥩" data-color="#ff8a65" data-bg="#fbe9e7">
+                    <div class="badge-circle" style="border-color: #ff8a65; background: #fbe9e7;">🥩</div>
+                </div>
+                <div class="badge-item-selectable" data-badge="🐟" data-color="#4fc3f7" data-bg="#e1f5fe">
+                    <div class="badge-circle" style="border-color: #4fc3f7; background: #e1f5fe;">🐟</div>
+                </div>
+                <div class="badge-item-selectable" data-badge="☕" data-color="#a1887f" data-bg="#efebe9">
+                    <div class="badge-circle" style="border-color: #a1887f; background: #efebe9;">☕</div>
+                </div>
+                <div class="badge-item-selectable" data-badge="🍔" data-color="#dce775" data-bg="#f9fbe7">
+                    <div class="badge-circle" style="border-color: #dce775; background: #f9fbe7;">🍔</div>
+                </div>
+                <div class="badge-item-selectable" data-badge="🍰" data-color="#f48fb1" data-bg="#fce4ec">
+                    <div class="badge-circle" style="border-color: #f48fb1; background: #fce4ec;">🍰</div>
+                </div>
+                <div class="badge-item-selectable" data-badge="🥢" data-color="#e0e0e0" data-bg="#fafafa">
+                    <div class="badge-circle" style="border-color: #e0e0e0; background: #fafafa;">🥢</div>
+                </div>
+                <div class="badge-item-selectable" data-badge="🍙" data-color="#81c784" data-bg="#e8f5e9">
+                    <div class="badge-circle" style="border-color: #81c784; background: #e8f5e9;">🍙</div>
+                </div>
+                <div class="badge-item-selectable" data-badge="🍻" data-color="#fff176" data-bg="#fffde7">
+                    <div class="badge-circle" style="border-color: #fff176; background: #fffde7;">🍻</div>
+                </div>
+            </div>
+            
+            <div class="badge-guide-text">좌측에서 장착할 슬롯을 먼저 선택해주세요.</div>
+        </div>
+    </div>
+</div>

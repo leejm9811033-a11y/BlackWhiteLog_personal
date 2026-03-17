@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>흑백로그 | 오너보드</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/owner/owner_board.css') }}">
+</head>
+<body>
+    <div class="owner-board-page">
+
+        <header class="top-header">
+            <div class="header-left">
+                <a href="{{ url_for('index') }}" class="brand-wrap" aria-label="메인 페이지로 이동">
+                    <img
+                        src="{{ url_for('static', filename='img/main_logo.png') }}"
+                        alt="흑백로그 로고"
+                        class="main-logo"
+                    >
+                </a>
+            </div>
+
+            <div class="header-right">
+                <div class="store-profile">
+                    <div class="profile-circle">👨‍🍳</div>
+                </div>
+
+                <button
+                    id="menuBtn"
+                    class="menu-toggle"
+                    type="button"
+                    aria-label="메뉴 열기"
+                >
+                    ☰
+                </button>
+            </div>
+        </header>
+
+        <main class="board-layout">
+            <aside class="sidebar">
+                <div class="sidebar-top">
+                    <div class="sidebar-title">오너 페이지</div>
+
+                    <ul class="sidebar-menu">
+                        <li class="sidebar-item active">
+                            <a href="{{ url_for('owner_board') }}">대시보드</a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="{{ url_for('owner_menu_management') }}">메뉴 관리</a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="{{ url_for('owner_review_management') }}">리뷰 관리</a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="{{ url_for('owner_notice_management') }}">공지사항 관리</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="info-edit-card card">
+                    <div class="info-row top-row">
+                        <h2>가게 현황</h2>
+                    </div>
+
+                    <div class="sidebar-notice-history info-card-history">
+                        <ul class="notice-history-list">
+                            {% if restaurant_menu_list %}
+                                {% for restaurant in restaurant_menu_list %}
+                                    <li class="notice-history-item">
+                                        <div class="notice-history-card info-summary-card">
+                                            <strong class="notice-title">{{ restaurant.name }}</strong>
+                                            <p class="notice-content">우리가게 판매 메뉴 개수<br>{{ restaurant.cnt }} 개</p>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="notice-history-item">
+                                    <div class="notice-history-card empty-card">
+                                        <strong class="notice-title">등록된 식당이 없습니다.</strong>
+                                        <p class="notice-content">가게 정보가 등록되면 이 영역에 표시됩니다.</p>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+                <button class="logout-btn" type="button">로그아웃</button>
+            </aside>
+
+            <section class="main-content">
+                <section class="welcome-section">
+                    <section class="content-grid">
+                    <div class="sidebar-notice card" id="sidebarNoticeCard">
+                        <div class="store-image-card">
+                            <div class="store-image-preview-wrap">
+                                {% if sidebar_store_image_url %}
+                                    <img
+                                        src="{{ sidebar_store_image_url }}"
+                                        alt="가게 대표 이미지"
+                                        class="store-image-preview"
+                                        id="storeImagePreview"
+                                    >
+                                {% else %}
+                                    <div class="store-image-empty" id="storeImagePreview">
+                                        등록된 가게 사진이 없습니다.
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <form
+                                id="storeImageUploadForm"
+                                class="store-image-upload-form"
+                                enctype="multipart/form-data"
+                            >
+                                <input
+                                    type="hidden"
+                                    name="restaurant_id"
+                                    id="storeImageRestaurantId"
+                                    value="{{ sidebar_selected_restaurant_id }}"
+                                >
+
+                                <input
+                                    type="file"
+                                    name="store_image"
+                                    id="storeImageInput"
+                                    accept=".jpg,.jpeg,.png,.gif,.webp"
+                                    hidden
+                                >
+
+                                <button type="button" class="fill-btn" id="storeImageUploadBtn">
+                                    사진 등록
+                                </button>
+                            </form>
+                        </div>
+                        <div class="sidebar-notice-header">
+                            <h3>공지사항</h3>
+                        </div>
+
+                        <div class="sidebar-notice-toggle-wrap">
+                            <label for="sidebarNoticeRestaurantSelect" class="sidebar-notice-toggle-label">가게 선택</label>
+                            <div class="sidebar-notice-toggle-box">
+                                <select id="sidebarNoticeRestaurantSelect" class="sidebar-notice-toggle-select" aria-label="공지사항 가게 선택">
+                                    {% for restaurant in sidebar_restaurant_list %}
+                                        <option
+                                            value="{{ restaurant.restaurant_id }}"
+                                            {% if restaurant.restaurant_id == sidebar_selected_restaurant_id %}selected{% endif %}
+                                        >
+                                            {{ restaurant.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <span class="sidebar-notice-toggle-icon">▼</span>
+                            </div>
+                        </div>
+
+                        <div
+                            class="sidebar-notice-current{% if sidebar_notice_current %} is-clickable{% endif %}"
+                            id="sidebarNoticeCurrent"
+                            {% if sidebar_notice_current %}
+                                data-notice-id="{{ sidebar_notice_current.notice_id }}"
+                                data-restaurant-id="{{ sidebar_notice_current.restaurant_id }}"
+                                tabindex="0"
+                                role="button"
+                                aria-label="현재 공지사항 상세 보기"
+                            {% endif %}
+                        >
+                            {% if sidebar_notice_current %}
+                                <span class="notice-badge">현재</span>
+                                <strong class="notice-title">{{ sidebar_notice_current.notice_title }}</strong>
+                                <p class="notice-content">{{ sidebar_notice_current.notice_content }}</p>
+                                <span class="notice-date">{{ sidebar_notice_current.updated_at }}</span>
+                            {% else %}
+                                <span class="notice-badge empty">현재</span>
+                                <strong class="notice-title">고정된 공지사항이 없습니다.</strong>
+                                <p class="notice-content">상단 고정된 공지사항을 등록하면 이 영역에 가장 최근 공지가 표시됩니다.</p>
+                                <span class="notice-date">-</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="sidebar-notice-history">
+                            <div class="sidebar-notice-history-title">이전 공지</div>
+
+                            <ul class="notice-history-list" id="sidebarNoticeHistoryList">
+                                {% if sidebar_notice_history_list %}
+                                    {% for notice in sidebar_notice_history_list %}
+                                        <li class="notice-history-item">
+                                            <div
+                                                class="notice-history-card is-clickable"
+                                                data-notice-id="{{ notice.notice_id }}"
+                                                data-restaurant-id="{{ notice.restaurant_id }}"
+                                                tabindex="0"
+                                                role="button"
+                                                aria-label="공지사항 상세 보기"
+                                            >
+                                                <strong class="notice-title">{{ notice.notice_title }}</strong>
+                                                <p class="notice-content">{{ notice.notice_content }}</p>
+                                                <span class="notice-date">{{ notice.updated_at }}</span>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                {% else %}
+                                    <li class="notice-history-item">
+                                        <div class="notice-history-card empty-card">
+                                            <strong class="notice-title">이전 공지가 없습니다.</strong>
+                                            <p class="notice-content">최근 일반 공지가 등록되면 이 영역에 최대 3개까지 표시됩니다.</p>
+                                            <span class="notice-date">-</span>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    <aside class="right-sidebar">
+                        <div class="mini-stat-card card">
+                            <div class="mini-stat-top">
+                                <h3>3월 리뷰</h3>
+                            </div>
+
+                            <div class="stat-number">
+                                {{ board_review_data.march_review_count if board_review_data else 0 }}
+                            </div>
+                        </div>
+
+                        <div class="review-card card" id="boardReviewCard">
+                            <div class="notice-header">
+                                <h3>최근 리뷰</h3>
+                            </div>
+
+                            <div class="review-list" id="boardReviewList">
+                                {% if board_review_data and board_review_data.review_list %}
+                                    {% for review in board_review_data.review_list %}
+                                        <div
+                                            class="review-item"
+                                            data-review-id="{{ review.review_id }}"
+                                            data-restaurant-id="{{ review.restaurant_id }}"
+                                            tabindex="0"
+                                            role="button"
+                                            aria-label="리뷰 상세 보기"
+                                            onclick="location.href='{{ url_for('owner_review_management', restaurant_id=review.restaurant_id) }}?review_id={{ review.review_id }}&page={{ review.review_page }}'"
+                                            onkeydown="if(event.key==='Enter' || event.key===' '){ event.preventDefault(); location.href='{{ url_for('owner_review_management', restaurant_id=review.restaurant_id) }}?review_id={{ review.review_id }}&page={{ review.review_page }}'; }"
+                                        >
+                                            <div class="review-profile">
+                                                {% if review.profile_image_url %}
+                                                    <img
+                                                        src="{{ review.profile_image_url }}"
+                                                        alt="{{ review.nickname }} 프로필 이미지"
+                                                        style="width:100%; height:100%; object-fit:cover; border-radius:50%;"
+                                                    >
+                                                {% else %}
+                                                    👤
+                                                {% endif %}
+                                            </div>
+
+                                            <div class="review-content">
+                                                <div class="review-top">
+                                                    <strong>{{ review.nickname }}</strong>
+                                                    <span class="stars">{{ review.rating_text }}</span>
+                                                    <span class="review-date">{{ review.updated_at }}</span>
+                                                </div>
+
+                                                <p>{{ review.content }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="review-item">
+                                        <div class="review-profile">📝</div>
+                                        <div class="review-content">
+                                            <div class="review-top">
+                                                <strong>등록된 리뷰 없음</strong>
+                                                <span class="review-date">-</span>
+                                            </div>
+                                            <p>아직 등록된 리뷰가 없습니다. 고객 리뷰가 작성되면 이 영역에 최신순으로 최대 5개까지 표시됩니다.</p>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <a
+                                href="{{ url_for('owner_review_management', restaurant_id=sidebar_selected_restaurant_id) }}"
+                                class="fill-btn review-more-btn"
+                            >
+                                리뷰 전체보기
+                            </a>
+                        </div>
+                    </aside>
+                    <div class="left-main-column">
+                        <div class="chart-card card">
+                            <div class="card-header">
+                                <h3>방문자 수 통계</h3>
+                            </div>
+
+                            <div class="chart-area">
+                                {% set y_max = 5 %}
+
+                                <div class="chart-top-row">
+                                    <div class="chart-y-axis">
+                                        <span>5</span>
+                                        <span>4</span>
+                                        <span>3</span>
+                                        <span>2</span>
+                                        <span>1</span>
+                                        <span>0</span>
+                                    </div>
+
+                                    <div class="chart-main">
+                                        <div class="chart-grid"></div>
+
+                                        <svg class="chart-svg" viewBox="0 0 900 220" preserveAspectRatio="none">
+                                            {% if visit_chart_data %}
+                                                {% set ns = namespace(points='') %}
+                                                {% for item in visit_chart_data %}
+                                                    {% set draw_count = item.visit_count if item.visit_count <= 5 else 5 %}
+                                                    {% set x = 20 + (loop.index0 * 95) %}
+                                                    {% set y = 170 - ((draw_count / y_max) * 130) %}
+                                                    {% set ns.points = ns.points + x|string + ',' + y|string + ' ' %}
+                                                {% endfor %}
+
+                                                <polyline
+                                                    fill="none"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="4"
+                                                    points="{{ ns.points.strip() }}"
+                                                />
+
+                                                <g class="chart-dots">
+                                                    {% for item in visit_chart_data %}
+                                                        {% set draw_count = item.visit_count if item.visit_count <= 5 else 5 %}
+                                                        {% set x = 20 + (loop.index0 * 95) %}
+                                                        {% set y = 170 - ((draw_count / y_max) * 130) %}
+                                                        <circle cx="{{ x }}" cy="{{ y }}" r="6"></circle>
+                                                    {% endfor %}
+                                                </g>
+                                            {% endif %}
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                <div class="chart-labels">
+                                    {% if visit_chart_data %}
+                                        {% for item in visit_chart_data %}
+                                            <span>{{ item.weekday }}</span>
+                                        {% endfor %}
+                                    {% else %}
+                                        <span>-</span>
+                                        <span>-</span>
+                                        <span>-</span>
+                                        <span>-</span>
+                                        <span>-</span>
+                                        <span>-</span>
+                                        <span>-</span>
+                                        <span>-</span>
+                                        <span>-</span>
+                                        <span>-</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </section>
+                </section>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <strong>흑백로그</strong>
+                    <span>Black & White Log</span>
+                </div>
+
+                <div class="footer-info">
+                    <p>© 2026 흑백로그. All rights reserved.</p>
+                    <p>
+                        본 사이트의 상호, 이미지, 리뷰 및 기타 콘텐츠는 각 권리자에게 권리가 있을 수 있으며,
+                        서비스 내 데이터는 업데이트 시점에 따라 실제 정보와 차이가 있을 수 있습니다.
+                    </p>
+                    <p>
+                        지도 및 위치 기반 서비스는 제휴 API 정책 및 각 제공사의 이용약관을 따릅니다.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="side-drawer-backdrop" id="sideDrawerBackdrop" hidden></div>
+
+    <aside class="side-drawer" id="sideDrawer" aria-hidden="true">
+        <div class="side-drawer__header">
+            <button
+                type="button"
+                class="side-drawer__close"
+                id="sideDrawerCloseBtn"
+                aria-label="메뉴 닫기"
+            >
+                ×
+            </button>
+
+            <div class="side-drawer__profile">
+                <div class="side-drawer__avatar">
+                    <span>👨‍🍳</span>
+                </div>
+                <strong class="side-drawer__name">사장님</strong>
+            </div>
+        </div>
+
+        <div class="side-drawer__body">
+            <nav class="side-drawer__nav">
+                <a href="{{ url_for('owner_board') }}" class="side-drawer__item">
+                    <span class="side-drawer__icon">⌂</span>
+                    <span>대시보드</span>
+                </a>
+
+                <a href="{{ url_for('owner_menu_management') }}" class="side-drawer__item">
+                    <span class="side-drawer__icon">▣</span>
+                    <span>메뉴 관리</span>
+                </a>
+
+                <a href="{{ url_for('owner_review_management') }}" class="side-drawer__item">
+                    <span class="side-drawer__icon">✎</span>
+                    <span>리뷰 관리</span>
+                </a>
+
+                <a href="#" class="side-drawer__item">
+                    <span class="side-drawer__icon">🏪</span>
+                    <span>가게 정보</span>
+                </a>
+            </nav>
+
+            <div class="side-drawer__divider"></div>
+
+            <div class="side-drawer__section-title">기타</div>
+
+            <div class="side-drawer__sublist">
+                <a href="#" class="side-drawer__subitem">설정</a>
+                <a href="#" class="side-drawer__subitem">고객센터</a>
+                <a href="#" class="side-drawer__subitem">이용약관</a>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+        window.ownerBoardNoticeInitialData = {
+            selected_restaurant_id: {{ sidebar_selected_restaurant_id | tojson }},
+            restaurant_list: {{ sidebar_restaurant_list | tojson }},
+            current_notice: {{ sidebar_notice_current | tojson }},
+            history_notice_list: {{ sidebar_notice_history_list | tojson }}
+        };
+    </script>
+
+    <script>
+        (function () {
+            const uploadBtn = document.getElementById("storeImageUploadBtn");
+            const fileInput = document.getElementById("storeImageInput");
+            const form = document.getElementById("storeImageUploadForm");
+            const restaurantIdInput = document.getElementById("storeImageRestaurantId");
+            const restaurantSelect = document.getElementById("sidebarNoticeRestaurantSelect");
+
+            if (restaurantSelect && restaurantIdInput) {
+                restaurantSelect.addEventListener("change", function () {
+                    restaurantIdInput.value = this.value;
+                });
+            }
+
+            if (uploadBtn && fileInput) {
+                uploadBtn.addEventListener("click", function () {
+                    fileInput.click();
+                });
+            }
+
+            if (fileInput && form) {
+                fileInput.addEventListener("change", async function () {
+                    if (!fileInput.files || !fileInput.files[0]) {
+                        return;
+                    }
+
+                    const formData = new FormData(form);
+
+                    try {
+                        const response = await fetch("{{ url_for('owner_board_api_store_image_upload') }}", {
+                            method: "POST",
+                            body: formData
+                        });
+
+                        const data = await response.json();
+
+                        if (!response.ok || !data.success) {
+                            throw new Error(data.message || "가게 사진 등록에 실패했습니다.");
+                        }
+
+                        alert(data.message || "가게 사진이 등록되었습니다.");
+                        window.location.reload();
+                    } catch (error) {
+                        alert(error.message || "가게 사진 등록 중 오류가 발생했습니다.");
+                    } finally {
+                        fileInput.value = "";
+                    }
+                });
+            }
+        })();
+    </script>
+
+    <script src="{{ url_for('static', filename='js/pages/owner_drawer.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pages/owner/owner_board.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>흑백로그 | 메뉴 관리</title>
+
+    <!-- 공통 레이아웃 / 드로어 / 메뉴관리 전용 스타일 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/owner/owner_layout_common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/owner/owner_drawer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/owner/owner_menu_management.css') }}">
+
+    <!-- JS에서 최초 렌더링과 Ajax 통신에 사용할 초기 데이터 / API 경로 -->
+    <script>
+        window.ownerMenuInitialData = {{ initial_payload | tojson }};
+        window.ownerMenuSelectedRestaurantId = {{ selected_restaurant_id | tojson }};
+        window.ownerMenuApi = {
+            listUrl: "{{ url_for('owner_menu_management_api_list') }}",
+            saveUrl: "{{ url_for('owner_menu_management_api_save') }}",
+            detailBaseUrl: "/owner/menu_management/api/detail",
+            deleteBaseUrl: "/owner/menu_management/api/delete"
+        };
+    </script>
+
+    <!-- 공통 드로어 동작 / 메뉴관리 전용 Ajax 처리 -->
+    <script defer src="{{ url_for('static', filename='js/pages/owner/owner_drawer.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/pages/owner/owner_menu_management.js') }}"></script>
+</head>
+<body>
+    <div class="owner-menu-page">
+
+        <!-- =========================
+             상단 헤더 영역
+             ========================= -->
+        <header class="top-header">
+            <div class="header-left">
+                <!-- 로고 클릭 시 오너 대시보드로 이동 -->
+                <a href="{{ url_for('owner_board') }}" class="brand-wrap" aria-label="흑백로그 오너 대시보드로 이동">
+                    <div class="brand-logo">
+                        <img
+                            src="{{ url_for('static', filename='img/main_logo.png') }}"
+                            alt="흑백로그 로고"
+                            class="main-logo"
+                        >
+                    </div>
+                </a>
+            </div>
+
+            <div class="header-right">
+                <!-- 현재는 고정 텍스트, 필요시 서버 날짜값으로 교체 가능 -->
+                <p class="today-date">2026.03.13 FRI</p>
+
+                <!-- 세션/DB에서 전달받은 오너 이름 출력 -->
+                <div class="store-profile">
+                    <p class="store-name">{{ owner.owner_name }}</p>
+                    <div class="profile-circle" aria-hidden="true">👨‍🍳</div>
+                </div>
+
+                <!-- 사이드 드로어 열기 버튼 -->
+                <button
+                    type="button"
+                    class="menu-toggle"
+                    id="menuBtn"
+                    aria-label="사이드 메뉴 열기"
+                    aria-controls="sideDrawer"
+                    aria-expanded="false"
+                >
+                    ☰
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+
+            <!-- =========================
+                 메뉴 등록 / 수정 폼 카드
+                 ========================= -->
+            <section class="menu-form-card">
+
+                <!-- Ajax 처리 결과 메시지 출력 영역 -->
+                <div class="form-message-list" id="formMessageList" hidden></div>
+
+                <form id="menuForm" enctype="multipart/form-data">
+                    <!-- 등록모드 / 수정모드에 따라 JS에서 제목이 변경됨 -->
+                    <h2 class="section-title" id="formTitle">메뉴 등록</h2>
+
+                    <!-- 수정 시 menu_id 저장 / 현재 페이지 유지용 hidden 값 -->
+                    <input type="hidden" id="client-menu-id" name="client_menu_id" value="">
+                    <input type="hidden" id="client-page" name="client_page" value="1">
+                    <input type="hidden" id="client-restaurant-id" name="client_restaurant_id" value="{{ selected_restaurant_id }}">
+
+                    <!-- =========================
+                         이미지 업로드 + 기본 정보
+                         ========================= -->
+                    <div class="menu-upload-section">
+                        <h3 class="sub-title">메뉴 사진 등록</h3>
+
+                        <div class="upload-form-grid">
+                            <div class="image-upload-box">
+                                <!-- 이미지 미리보기 영역 -->
+                                <div class="preview-image-wrap" id="previewImageWrap">
+                                    <div class="preview-empty" id="previewEmpty"></div>
+                                    <img
+                                        src=""
+                                        alt="메뉴 이미지 미리보기"
+                                        class="preview-image"
+                                        id="previewImage"
+                                        style="display: none;"
+                                    >
+                                </div>
+
+                                <!-- 실제 file input은 숨기고 label 버튼으로 업로드 -->
+                                <label for="menu-image-input" class="point-btn upload-btn">이미지 업로드</label>
+
+                                <input
+                                    type="file"
+                                    id="menu-image-input"
+                                    name="client_menu_image"
+                                    accept="image/*"
+                                    class="image-file-input"
+                                >
+
+                                <!-- 업로드 파일명 / 기존 파일명 안내 -->
+                                <p class="image-guide-text" id="imageGuideText">이미지 미등록</p>
+
+                                <!-- 수정 모드에서 기존 이미지 삭제 여부 선택 -->
+                                <label class="check-item image-remove-check" id="removeImageLabel">
+                                    <input
+                                        type="checkbox"
+                                        name="client_remove_image"
+                                        id="remove-image-input"
+                                        value="Y"
+                                    >
+                                    <span>기존 이미지 삭제</span>
+                                </label>
+                            </div>
+
+                            <div class="menu-input-area">
+                                <!-- 가게 선택 토글 -->
+                                <div class="form-row form-column">
+                                    <label>가게 선택</label>
+
+                                    <div class="restaurant-toggle-group" id="restaurantToggleGroup">
+                                        {% for restaurant in restaurant_list %}
+                                            <label class="restaurant-toggle-item">
+                                                <input
+                                                    type="radio"
+                                                    name="restaurant_toggle"
+                                                    value="{{ restaurant.restaurant_id }}"
+                                                    {% if restaurant.restaurant_id == selected_restaurant_id %}checked{% endif %}
+                                                >
+                                                <span>{{ restaurant.name }}</span>
+                                            </label>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <!-- 메뉴명 입력 -->
+                                <div class="form-row form-column">
+                                    <label for="menu-name">메뉴명</label>
+                                    <input
+                                        type="text"
+                                        id="menu-name"
+                                        name="client_menu_name"
+                                        placeholder="메뉴명을 입력하세요"
+                                    >
+                                </div>
+
+                                <!-- 가격 입력 -->
+                                <div class="form-row form-column">
+                                    <label for="menu-price">가격</label>
+                                    <div class="price-input-wrap">
+                                        <input
+                                            type="number"
+                                            id="menu-price"
+                                            name="client_price"
+                                            placeholder="가격 입력"
+                                        >
+                                        <span class="price-unit">원</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- =========================
+                         상세 정보 영역
+                         ========================= -->
+                    <div class="menu-detail-section">
+                        <div class="form-row horizontal-row">
+                            <div class="field-group category-group">
+                                <label for="menu-category">카테고리</label>
+
+                                <!-- DB에서 받아온 카테고리 목록 출력 -->
+                                <select id="menu-category" name="client_menu_category_id">
+                                    {% for category in categories %}
+                                        <option value="{{ category.menu_category_id }}">
+                                            {{ category.menu_category_name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- =========================
+                         옵션 / 상태 영역
+                         ========================= -->
+                    <div class="menu-option-section">
+                        <h3 class="sub-title">옵션 설정</h3>
+
+                        <!-- 현재 옵션 그룹 UI 확장용 자리 -->
+                        <div class="option-group-wrap">
+                            <button type="button" class="outline-btn option-add-btn">＋ 옵션 그룹 추가</button>
+                        </div>
+
+                        <!-- 품절 여부 체크 -->
+                        <div class="checkbox-row">
+                            <label class="check-item">
+                                <input
+                                    type="checkbox"
+                                    name="client_soldout"
+                                    id="soldout-input"
+                                    value="Y"
+                                >
+                                <span>품절 처리</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- =========================
+                         하단 액션 버튼
+                         ========================= -->
+                    <div class="action-btn-row">
+                        <!-- 수정 취소 / 입력 초기화 -->
+                        <button type="button" class="ghost-btn" id="cancelEditBtn">취소</button>
+
+                        <!-- 등록모드: 등록완료 / 수정모드: 수정완료 -->
+                        <button type="submit" class="point-btn" id="submitBtn">등록완료</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- =========================
+                 등록된 메뉴 목록 카드
+                 ========================= -->
+            <section class="registered-menu-card">
+                <div class="registered-menu-card-header">
+                    <h2 class="section-title">등록된 메뉴</h2>
+
+                    <!-- Ajax 렌더링 후 총 메뉴 개수 출력 -->
+                    <p class="registered-menu-count" id="registeredMenuCount"></p>
+                </div>
+
+                <!-- JS가 메뉴 목록을 그려주는 영역 -->
+                <div class="registered-menu-list" id="registeredMenuList"></div>
+
+                <!-- JS가 SPA 방식 페이지 버튼을 그려주는 영역 -->
+                <div class="pagination-wrap" id="paginationWrap"></div>
+            </section>
+        </main>
+
+        <!-- =========================
+             푸터 영역
+             ========================= -->
+        <footer class="site-footer">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <strong>흑백로그</strong>
+                    <span>Black &amp; White Log</span>
+                </div>
+
+                <div class="footer-info">
+                    <p>© 2026 흑백로그. All rights reserved.</p>
+                    <p>메뉴 및 매장 정보는 운영 정책과 실제 판매 상황에 따라 변경될 수 있습니다.</p>
+                    <p>서비스 내 콘텐츠 및 이미지의 권리는 각 권리자에게 있습니다.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- =========================
+         사이드 드로어 배경
+         ========================= -->
+    <div class="side-drawer-backdrop" id="sideDrawerBackdrop" hidden></div>
+
+    <!-- =========================
+         사이드 드로어 메뉴
+         ========================= -->
+    <aside class="side-drawer" id="sideDrawer" aria-hidden="true">
+        <div class="side-drawer__header">
+            <button
+                type="button"
+                class="side-drawer__close"
+                id="sideDrawerCloseBtn"
+                aria-label="메뉴 닫기"
+            >
+                ×
+            </button>
+
+            <div class="side-drawer__profile">
+                <div class="side-drawer__avatar">
+                    <span>👨‍🍳</span>
+                </div>
+                <strong class="side-drawer__name">{{ owner.owner_name }}</strong>
+            </div>
+        </div>
+
+        <div class="side-drawer__body">
+            <nav class="side-drawer__nav">
+                <a href="{{ url_for('owner_board') }}" class="side-drawer__item">
+                    <span class="side-drawer__icon">⌂</span>
+                    <span>대시보드</span>
+                </a>
+
+                <a href="{{ url_for('owner_menu_management') }}" class="side-drawer__item">
+                    <span class="side-drawer__icon">▣</span>
+                    <span>메뉴 관리</span>
+                </a>
+
+                <a href="{{ url_for('owner_review_management') }}" class="side-drawer__item">
+                    <span class="side-drawer__icon">✎</span>
+                    <span>리뷰 관리</span>
+                </a>
+
+                <a href="{{ url_for('owner_notice_management') }}" class="side-drawer__item">
+                    <span class="side-drawer__icon">📢</span>
+                    <span>공지사항 관리</span>
+                </a>
+            </nav>
+
+            <div class="side-drawer__divider"></div>
+
+            <div class="side-drawer__section-title">기타</div>
+
+            <div class="side-drawer__sublist">
+                <a href="#" class="side-drawer__subitem">설정</a>
+                <a href="#" class="side-drawer__subitem">고객센터</a>
+                <a href="#" class="side-drawer__subitem">이용약관</a>
+            </div>
+        </div>
+    </aside>
+</body>
+</html>

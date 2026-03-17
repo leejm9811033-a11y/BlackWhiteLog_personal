@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 관리</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_manage.css') }}">
+</head>
+<body>
+    <div class="admin-page">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>회원 관리</h1>
+                <p>회원 정보와 상태를 확인하고 관리할 수 있습니다.</p>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-wrap">
+                        {% for message in messages %}
+                            <div class="flash-message">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>이메일</th>
+                            <th>닉네임</th>
+                            <th>권한</th>
+                            <th>상태</th>
+                            <th>로그인 방식</th>
+                            <th>가입일</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if users %}
+                            {% for user in users %}
+                                <tr>
+                                    <td>{{ user.user_id }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.nickname }}</td>
+                                    <td>{{ user.role }}</td>
+                                    <td>{{ user.status }}</td>
+                                    <td>{{ user.provider or 'local' }}</td>
+                                    <td>{{ user.created_at }}</td>
+                                    <td class="action-cell">
+                                        {% if user.status == 'DELETED' %}
+                                            <form action="{{ url_for('admin.admin_user_restore', user_id=user.user_id) }}" method="POST" class="inline-form">
+                                                <button type="submit" class="secondary-btn">복구</button>
+                                            </form>
+                                        {% else %}
+                                            <form action="{{ url_for('admin.admin_user_deactivate', user_id=user.user_id) }}" method="POST" class="inline-form" onsubmit="return confirm('이 회원을 탈퇴 처리하시겠습니까?');">
+                                                <button type="submit" class="danger-btn">탈퇴 처리</button>
+                                            </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="8" class="empty-row">회원 데이터가 없습니다.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bottom-link-wrap">
+                <a href="{{ url_for('admin.admin_page') }}" class="back-link">관리자 메인으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

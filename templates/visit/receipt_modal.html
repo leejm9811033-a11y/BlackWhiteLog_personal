@@ -1,0 +1,41 @@
+<div id="visitReceiptModal" class="visit-modal" hidden>
+    <div class="visit-modal__backdrop" id="visitReceiptBackdrop"></div>
+
+    <div class="visit-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="visitReceiptTitle">
+        <button type="button" class="visit-modal__close" id="visitReceiptCloseBtn" aria-label="도장 찍기 팝업 닫기">×</button>
+
+        <div class="visit-modal__header">
+            <div class="visit-modal__badge">도장 찍기</div>
+            <h2 id="visitReceiptTitle" class="visit-modal__title">영수증으로 방문 등록</h2>
+            <p class="visit-modal__desc">영수증 사진을 올리면 AI가 가게와 메뉴를 인식해서 방문 기록을 등록해드려요.</p>
+        </div>
+
+        <form id="visitReceiptForm" class="visit-modal__form" enctype="multipart/form-data">
+            <label for="receiptImageInput" class="visit-upload-box" id="visitUploadBox">
+                <input type="file" id="receiptImageInput" name="receipt_image" accept="image/*" hidden>
+                <div class="visit-upload-box__icon">🧾</div>
+                <div class="visit-upload-box__text">
+                    <strong>영수증 사진 업로드</strong>
+                    <span>클릭해서 사진을 선택해 주세요.</span>
+                </div>
+            </label>
+
+            <div id="visitPreviewArea" class="visit-preview-area" hidden>
+                <img id="visitPreviewImage" class="visit-preview-image" alt="영수증 미리보기">
+                <div id="visitFileName" class="visit-file-name"></div>
+            </div>
+
+            <div id="visitLoadingArea" class="visit-loading" hidden>
+                <div class="visit-spinner"></div>
+                <p>영수증을 분석하고 있어요...</p>
+            </div>
+
+            <p id="visitReceiptMessage" class="visit-modal__message" hidden></p>
+
+            <div class="visit-modal__actions">
+                <button type="button" class="ghost-btn visit-modal__secondary" id="visitReceiptCancelBtn">취소</button>
+                <button type="submit" class="search-btn visit-modal__primary" id="visitReceiptSubmitBtn">등록하기</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,513 @@
+@charset "UTF-8";
+
+/* =========================
+   리뷰관리 페이지 전용 토큰
+   - 공통 헤더/푸터/드로어 스타일은 owner_layout_common.css / owner_drawer.css에서 관리
+   ========================= */
+:root {
+    --bg: #f5f6f2;
+    --panel: #ffffff;
+    --line: #e7e9e3;
+    --text: #222222;
+    --sub-text: #666666;
+    --muted: #8c8c8c;
+    --point: #9caf7f;
+    --point-dark: #82956a;
+    --point-light: #eef3e8;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 12px;
+}
+
+/* =========================
+   페이지 기본 배경 / 래퍼
+   ========================= */
+body {
+    font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+    background: linear-gradient(180deg, #eef2fb 0 92px, var(--bg) 92px 100%);
+    color: var(--text);
+}
+
+.owner-board-page {
+    width: min(1380px, calc(100% - 32px));
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 20px 0 28px;
+}
+
+/* =========================
+   공통 카드
+   ========================= */
+.card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+}
+
+/* =========================
+   리뷰 페이지 레이아웃
+   ========================= */
+.review-page {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* =========================
+   리뷰 상세 액션 버튼
+   - 공통 버튼 초기화/헤더 버튼은 owner_layout_common.css 사용
+   ========================= */
+.fill-btn {
+    min-width: 120px;
+    height: 50px;
+    border: none;
+    border-radius: 16px;
+    padding: 0 22px;
+    background: var(--point);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.2s ease;
+}
+
+.fill-btn:hover {
+    background: var(--point-dark);
+}
+
+.ghost-btn {
+    min-width: 110px;
+    height: 50px;
+    border-radius: 16px;
+    padding: 0 20px;
+    background: #ffffff;
+    border: 1px solid #d8ddd2;
+    color: #444444;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.ghost-btn.warning {
+    color: #7f8f69;
+    border-color: #cfd9c3;
+    background: #f7faf3;
+}
+
+/* =========================
+   상단 타이틀 카드
+   ========================= */
+.page-title-card {
+    padding: 28px 30px;
+}
+
+.page-title-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.page-chip {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: var(--point-light);
+    color: var(--point-dark);
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.page-title-left h2 {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.page-title-left p {
+    color: #666666;
+    font-size: 1.04rem;
+    line-height: 1.6;
+}
+
+/* =========================
+   리뷰 요약 카드
+   ========================= */
+.review-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.summary-card {
+    padding: 24px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.summary-card.active {
+    border-color: #d7e3cb;
+    background: linear-gradient(180deg, #fbfdf8 0%, #f4f8ef 100%);
+}
+
+.summary-card.warning {
+    background: linear-gradient(180deg, #ffffff 0%, #f7faf4 100%);
+}
+
+.summary-label,
+.summary-value {
+    white-space: nowrap;
+}
+
+.summary-label {
+    color: #666666;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.summary-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #222222;
+}
+
+/* =========================
+   필터 영역
+   ========================= */
+.review-filter-card {
+    padding: 18px;
+}
+
+.filter-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.tab-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    min-width: 100px;
+    height: 46px;
+    padding: 0 18px;
+    border: 1px solid #dfe4da;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #333333;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.tab-btn.active {
+    background: var(--point);
+    border-color: var(--point);
+    color: #ffffff;
+}
+
+.search-box {
+    display: flex;
+    width: min(360px, 100%);
+    border: 1px solid #dfe4da;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.search-box input {
+    flex: 1;
+    height: 46px;
+    border: none;
+    outline: none;
+    padding: 0 16px;
+    background: transparent;
+    font: inherit;
+}
+
+.search-box button {
+    width: 52px;
+    border: none;
+    border-left: 1px solid #eef1eb;
+    background: #ffffff;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.filter-bottom {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-chip {
+    min-width: 110px;
+    height: 44px;
+    padding: 0 16px;
+    border: 1px solid #dfe4da;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #444444;
+    font-size: 0.96rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* =========================
+   리뷰 테이블
+   ========================= */
+.review-board {
+    padding: 18px 18px 20px;
+}
+
+.review-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.review-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 860px;
+}
+
+.review-table thead th {
+    padding: 16px 14px;
+    border-bottom: 1px solid #e8ebe5;
+    background: #fafbf8;
+    color: #555555;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.review-table tbody td {
+    padding: 18px 14px;
+    border-bottom: 1px solid #eef1eb;
+    color: #333333;
+    font-size: 0.96rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.review-table tbody tr.is-selected {
+    background: #fbfdf8;
+}
+
+.state-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 84px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.state-badge.pending {
+    background: #f7f2df;
+    color: #8a6c1a;
+}
+
+.state-badge.done {
+    background: #eef4ec;
+    color: #6e8762;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    min-width: 40px;
+    height: 40px;
+    border: 1px solid #dfe4da;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #444444;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.pagination button.active {
+    background: var(--point);
+    border-color: var(--point);
+    color: #ffffff;
+}
+
+/* =========================
+   리뷰 상세 카드
+   ========================= */
+.review-detail-card {
+    padding: 24px;
+}
+
+.detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #ecefe8;
+    color: #444444;
+    font-size: 0.95rem;
+}
+
+.detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px 0;
+}
+
+.detail-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detail-row strong {
+    font-size: 1rem;
+    color: #222222;
+}
+
+.detail-row p {
+    color: #444444;
+    line-height: 1.7;
+}
+
+.answer-row textarea {
+    width: 100%;
+    min-height: 160px;
+    border: 1px solid #dfe4da;
+    border-radius: 16px;
+    padding: 16px 18px;
+    resize: vertical;
+    font: inherit;
+    color: #222222;
+    outline: none;
+    background: #ffffff;
+}
+
+.answer-row textarea:focus {
+    border-color: var(--point);
+    box-shadow: 0 0 0 4px rgba(156, 175, 127, 0.12);
+}
+
+.detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 6px;
+}
+
+/* =========================
+   반응형
+   ========================= */
+@media (max-width: 1100px) {
+    .review-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .filter-top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .owner-board-page {
+        width: min(100%, calc(100% - 20px));
+        padding: 12px 0 20px;
+    }
+
+    .page-title-card,
+    .review-board,
+    .review-detail-card {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .page-title-left h2 {
+        font-size: 1.55rem;
+    }
+
+    .review-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-card {
+        padding: 20px 18px;
+    }
+
+    .summary-value {
+        font-size: 1.7rem;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+    }
+
+    .fill-btn,
+    .ghost-btn {
+        width: 100%;
+    }
+}
+
+.review-restaurant-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.restaurant-select-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.restaurant-select-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #444;
+}
+
+.restaurant-select {
+    min-width: 220px;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid #d9d9d9;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 14px;
+}
+
+.review-content-cell {
+    max-width: 280px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,191 @@
+.visit-stamp-btn {
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.visit-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+}
+
+.visit-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 18, 15, 0.28);
+    backdrop-filter: blur(6px);
+}
+
+.visit-modal__dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(92vw, 560px);
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+    padding: 28px;
+}
+
+.visit-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--subtext);
+}
+
+.visit-modal__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: var(--chip);
+    color: var(--point-dark);
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.visit-modal__title {
+    margin: 0;
+    font-size: 28px;
+}
+
+.visit-modal__desc {
+    margin: 10px 0 0;
+    color: var(--subtext);
+    line-height: 1.6;
+}
+
+.visit-modal__form {
+    margin-top: 22px;
+}
+
+.visit-upload-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 120px;
+    padding: 20px;
+    border: 1.5px dashed var(--line);
+    border-radius: 18px;
+    background: #fafbf8;
+    cursor: pointer;
+}
+
+.visit-upload-box__icon {
+    font-size: 40px;
+}
+
+.visit-upload-box__text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.visit-upload-box__text span {
+    color: var(--subtext);
+}
+
+.visit-preview-area {
+    margin-top: 16px;
+    padding: 16px;
+    background: #f8f9f4;
+    border-radius: 18px;
+}
+
+.visit-preview-image {
+    width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.visit-file-name {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--subtext);
+}
+
+.visit-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 18px;
+}
+
+.visit-spinner {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 4px solid #dfe7d5;
+    border-top-color: var(--point-dark);
+    animation: visit-spin 0.9s linear infinite;
+}
+
+@keyframes visit-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.visit-modal__message {
+    margin-top: 18px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.visit-modal__message.is-error {
+    background: #fff2f2;
+    color: #c53d3d;
+}
+
+.visit-modal__message.is-success {
+    background: #eef7ea;
+    color: #3f7a31;
+}
+
+.visit-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.visit-modal__secondary,
+.visit-modal__primary {
+    min-width: 110px;
+}
+
+body.visit-modal-open {
+    overflow: hidden;
+}
+
+#visitLoadingArea[hidden] {
+    display: none !important;
+}
+
+#visitPreviewArea[hidden] {
+    display: none !important;
+}
+
+#visitReceiptMessage[hidden] {
+    display: none !important;
+}
+
+#visitReceiptModal[hidden] {
+    display: none !important;
+}

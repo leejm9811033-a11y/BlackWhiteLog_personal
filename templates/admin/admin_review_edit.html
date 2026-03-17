@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 수정</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_manage.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>리뷰 수정</h1>
+        <p class="admin-subtitle">
+            {{ review.restaurant_name }} / 작성자: {{ review.user_nickname }}
+        </p>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-message">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="admin-form">
+            <div class="form-group">
+                <label for="rating">평점</label>
+                <input
+                    type="number"
+                    id="rating"
+                    name="rating"
+                    min="1"
+                    max="5"
+                    value="{{ review.rating }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea
+                    id="content"
+                    name="content"
+                    rows="6"
+                    required
+                >{{ review.content }}</textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-save">저장</button>
+                <a href="{{ url_for('admin.admin_review_manage', restaurant_id=review.restaurant_id) }}" class="btn-back">
+                    돌아가기
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

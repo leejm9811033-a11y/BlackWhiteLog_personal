@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="admin-page">
+        <div class="admin-container">
+
+            <!-- 상단 헤더 -->
+            <div class="admin-header">
+                <div class="admin-header-left">
+                    <h1>관리자 페이지</h1>
+                    <p>관리자만 접근 가능한 흑백로그 관리 화면입니다.</p>
+                </div>
+
+                <a href="{{ url_for('index') }}" class="admin-home-btn">메인으로</a>
+            </div>
+
+            <!-- 관리 카드 목록 -->
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h2>회원 관리</h2>
+                    <p>회원 목록을 확인하고 상태를 관리할 수 있습니다.</p>
+                    <a href="{{ url_for('admin.admin_users') }}" class="admin-card-btn">회원 관리 바로가기</a>
+                </div>
+
+                <div class="admin-card">
+                    <h2>신고 / 제재 관리</h2>
+                    <p>신고 목록을 확인하고 처리 상태를 변경하거나 회원 제재 내역을 함께 관리할 수 있습니다.</p>
+                    <a href="{{ url_for('admin.admin_moderation') }}" class="admin-card-btn">신고 / 제재 관리 바로가기</a>
+                </div>
+
+                <div class="admin-card">
+                    <h2>리뷰 관리</h2>
+                    <p>리뷰 목록을 확인하고 숨김, 삭제, 복구를 관리할 수 있습니다.</p>
+                    <a href="{{ url_for('admin.admin_review_restaurants') }}" class="admin-card-btn">리뷰 관리 바로가기</a>
+                </div>
+
+                <div class="admin-card">
+                    <h2>음식점 관리</h2>
+                    <p>음식점 목록을 확인하고 등록, 수정, 삭제를 관리할 수 있습니다.</p>
+                    <a href="{{ url_for('admin.admin_restaurants') }}" class="admin-card-btn">음식점 관리 바로가기</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

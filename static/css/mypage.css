@@ -1,0 +1,575 @@
+/* =========================
+   Pretendard 폰트 로드
+   ※ @import는 반드시 맨 위에 있어야 함
+========================= */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css");
+
+/* =========================
+   기본 설정
+========================= */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Pretendard Variable", "Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    background: linear-gradient(180deg, #f7f8f3 0%, #edf3e5 100%);
+    color: #1f241f;
+}
+
+/* =========================
+   마이페이지 메인 전체 영역
+========================= */
+.mypage-page {
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+/* 마이페이지 메인 카드 */
+.mypage-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px;
+    background: #fcfcf8;
+    border: 1px solid #d9dfc9;
+    border-radius: 28px;
+    box-shadow: 0 12px 28px rgba(106, 126, 83, 0.06);
+}
+
+/* =========================
+   상단 헤더 영역
+========================= */
+.mypage-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+/* 프로필 아이콘 원형 박스 */
+.mypage-profile-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border: 1px solid #c9d6ab;
+    background: #f3f7ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+
+/* 제목 영역 */
+.mypage-title-wrap h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: #10150f;
+}
+
+.mypage-title-wrap p {
+    margin: 8px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #7b8672;
+}
+
+/* =========================
+   회원 정보 박스
+========================= */
+.mypage-info-box {
+    margin-bottom: 24px;
+    overflow: hidden;
+    background: #fffefb;
+    border: 1px solid #d7dfc0;
+    border-radius: 20px;
+}
+
+/* 닉네임 / 이메일 한 줄 */
+.mypage-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 18px;
+    border-bottom: 1px solid #e7ecd9;
+}
+
+.mypage-info-row:last-child {
+    border-bottom: none;
+}
+
+/* 왼쪽 라벨 */
+.mypage-info-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #708066;
+}
+
+/* 오른쪽 값 */
+.mypage-info-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f241f;
+}
+
+/* =========================
+   메뉴 버튼 영역
+========================= */
+.mypage-menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 26px;
+}
+
+/* 내 리뷰 보기 / 즐겨찾기 / 방문 기록 / 업적 랭킹 버튼 */
+.mypage-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 76px;
+    background: #fbfcf7;
+    border: 1px solid #d9dfc9;
+    border-radius: 18px;
+    color: #1f241f;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    transition: all 0.2s ease;
+}
+
+.mypage-menu-btn:hover {
+    background: #f2f6e9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(106, 126, 83, 0.06);
+}
+
+
+
+/* =========================
+   즐겨찾기 페이지 전용
+========================= */
+.favorite-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.favorite-card {
+    padding: 22px 20px;
+}
+
+.favorite-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.favorite-category-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    height: 34px;
+    padding: 0 12px;
+    background: #eef3e3;
+    border: 1px solid #d7dfc0;
+    border-radius: 999px;
+    color: #667655;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.favorite-delete-form {
+    margin: 0;
+}
+
+.favorite-delete-btn {
+    min-width: 58px;
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid #e3c7c3;
+    border-radius: 999px;
+    background: #fff8f7;
+    color: #c15b52;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.favorite-delete-btn:hover {
+    background: #fdf0ee;
+    border-color: #d9a9a2;
+    color: #ae463e;
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   하단 버튼 영역
+========================= */
+.mypage-bottom-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+/* 메인으로 돌아가기 버튼 */
+.mypage-main-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 190px;
+    height: 52px;
+    padding: 0 20px;
+    background: #171d12;
+    border-radius: 16px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    transition: all 0.2s ease;
+}
+
+.mypage-main-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* 회원탈퇴 버튼 */
+.mypage-withdraw-btn {
+    min-width: 150px;
+    height: 52px;
+    padding: 0 20px;
+    background: #e05a54;
+    border: none;
+    border-radius: 16px;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mypage-withdraw-btn:hover {
+    background: #d84a44;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   마이페이지 상세 공통
+   (내 리뷰 / 즐겨찾기 / 방문 기록 / 업적)
+========================= */
+.mypage-detail-page {
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: linear-gradient(180deg, #f7f8f3 0%, #edf3e5 100%);
+}
+
+.mypage-detail-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background: #fcfcf8;
+    border: 1px solid #d9dfc9;
+    border-radius: 28px;
+    box-shadow: 0 12px 28px rgba(106, 126, 83, 0.06);
+}
+
+/* 상세 페이지 상단 */
+.mypage-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.mypage-detail-header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #1f241f;
+}
+
+.mypage-detail-header p {
+    margin: 8px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #76806f;
+}
+
+/* 마이페이지로 돌아가기 버튼 */
+.mypage-back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 42px;
+    padding: 0 18px;
+    background: #f8faf4;
+    border: 1px solid #cfd8b4;
+    border-radius: 14px;
+    color: #5f6f52;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* 상세 목록 */
+.mypage-detail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* 상세 카드 한 개 */
+.mypage-detail-card {
+    padding: 18px;
+    background: #fffefb;
+    border: 1px solid #d7dfc0;
+    border-radius: 18px;
+}
+
+/* 상세 카드 상단 제목 줄 */
+.mypage-detail-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.mypage-detail-top strong {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f241f;
+}
+
+/* 상세 카드 본문 */
+.mypage-detail-card p {
+    margin: 0 0 10px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.65;
+    color: #455241;
+}
+
+/* 상세 카드 하단 메타 정보 */
+.mypage-detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
+    color: #7a8572;
+}
+
+/* 데이터 없을 때 */
+.mypage-empty {
+    padding: 30px;
+    text-align: center;
+    background: #fbfcf8;
+    border: 1px dashed #d7dfc0;
+    border-radius: 18px;
+    color: #7a8572;
+}
+
+/* =========================
+   반응형
+========================= */
+@media (max-width: 768px) {
+    .mypage-container {
+        padding: 22px;
+    }
+
+    .mypage-menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mypage-bottom-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .mypage-main-btn,
+    .mypage-withdraw-btn {
+        width: 100%;
+    }
+
+    .mypage-info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .mypage-detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* =========================
+   닉네임 인라인 수정
+========================= */
+.mypage-info-row--edit {
+    align-items: center;
+}
+
+.mypage-inline-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mypage-inline-input {
+    width: 160px;
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid #d7dfc0;
+    border-radius: 12px;
+    background: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f241f;
+    outline: none;
+}
+
+.mypage-inline-input:focus {
+    border-color: #a8b88e;
+    box-shadow: 0 0 0 3px rgba(168, 184, 142, 0.15);
+}
+
+.mypage-inline-btn {
+    height: 40px;
+    padding: 0 14px;
+    border: none;
+    border-radius: 12px;
+    background: #8aa16f;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mypage-inline-btn:hover {
+    background: #7b9461;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   플래시 메시지
+========================= */
+.mypage-flash-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.mypage-flash {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #f4f8ed;
+    border: 1px solid #d4e1c0;
+    color: #5f7454;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* =========================
+   닉네임 변경 박스
+========================= */
+.mypage-edit-box {
+    margin-bottom: 24px;
+    padding: 18px;
+    background: #fffefb;
+    border: 1px solid #d7dfc0;
+    border-radius: 20px;
+}
+
+.mypage-edit-title {
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #708066;
+}
+
+.mypage-edit-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mypage-edit-input {
+    flex: 1;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid #d7dfc0;
+    border-radius: 12px;
+    background: #ffffff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f241f;
+    outline: none;
+}
+
+.mypage-edit-input:focus {
+    border-color: #a8b88e;
+    box-shadow: 0 0 0 3px rgba(168, 184, 142, 0.15);
+}
+
+.mypage-edit-btn {
+    height: 44px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 12px;
+    background: #8aa16f;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mypage-edit-btn:hover {
+    background: #7b9461;
+    transform: translateY(-1px);
+}
+
+.nickname-flash {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+    border: 1px solid #cdd7b0;
+    background: #f7faef;
+    color: #5f6f3d;
+}
+
+.nickname-flash.success {
+    background: #f7faef;
+    color: #5f6f3d;
+    border-color: #cdd7b0;
+}
+
+.nickname-flash.error {
+    background: #fff3f1;
+    color: #c94b42;
+    border-color: #efb7b1;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방문 기록</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
+</head>
+<body>
+    <div class="mypage-detail-page">
+        <div class="mypage-detail-container">
+            <div class="mypage-detail-header">
+                <div>
+                    <h1>방문 기록</h1>
+                    <p>{{ user_nickname }}님의 방문 기록입니다.</p>
+                </div>
+                <a href="{{ url_for('mypage.mypage') }}" class="mypage-back-btn">마이페이지로</a>
+            </div>
+
+            <div class="mypage-detail-list">
+                {% if visits %}
+                    {% for visit in visits %}
+                        <div class="mypage-detail-card">
+                            <div class="mypage-detail-top">
+                                <strong>{{ visit.restaurant_name }}</strong>
+                                <span>도장 {{ visit.stamp_count }}개</span>
+                            </div>
+                            <div class="mypage-detail-meta">
+                                <span>{{ visit.visited_at }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="mypage-empty">방문 기록이 없습니다.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

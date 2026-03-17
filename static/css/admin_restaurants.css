@@ -1,0 +1,295 @@
+/* =========================
+   기본 공통 설정
+   ========================= */
+
+/* 모든 요소 크기 계산 시 padding, border 포함 */
+* {
+    box-sizing: border-box;
+}
+
+/* 페이지 전체 기본 배경 / 글꼴 / 글자색 */
+body {
+    margin: 0;
+    background: #f4f6ef;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    color: #222;
+}
+
+
+/* =========================
+   관리자 페이지 전체 영역
+   ========================= */
+
+/* 바깥 여백 */
+.admin-page {
+    padding: 40px 20px;
+}
+
+/* 흰색 카드형 메인 박스 */
+.admin-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #dbe2cc;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+/* 등록/수정 폼 화면은 폭을 조금 좁게 */
+.admin-form-container {
+    max-width: 760px;
+}
+
+
+/* =========================
+   상단 제목 영역
+   ========================= */
+
+/* 제목 + 설명 문구 묶음 */
+.admin-header {
+    margin-bottom: 24px;
+}
+
+/* 큰 제목 */
+.admin-header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 800;
+    color: #2c341f;
+}
+
+/* 설명 문구 */
+.admin-header p {
+    margin: 0;
+    font-size: 14px;
+    color: #687255;
+}
+
+
+/* =========================
+   flash 메시지 영역
+   ========================= */
+
+/* 메시지 바깥 여백 */
+.flash-wrap {
+    margin-bottom: 18px;
+}
+
+/* 성공/안내 메시지 박스 */
+.flash-message {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #f7faef;
+    border: 1px solid #d9e4bf;
+    color: #5f7540;
+    font-size: 14px;
+}
+
+
+/* =========================
+   검색창 + 등록 버튼 영역
+   ========================= */
+
+/* 위쪽 검색창 / 등록 버튼 한 줄 정렬 */
+.admin-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+/* 검색 폼 */
+.search-form {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+}
+
+/* 검색 입력창 */
+.search-form input {
+    width: 100%;
+    max-width: 360px;
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid #cfd8b8;
+    border-radius: 12px;
+    outline: none;
+    font-size: 14px;
+}
+
+
+/* =========================
+   공통 버튼 스타일
+   ========================= */
+
+/* 검색 버튼 / 등록 / 수정 / 삭제 / 저장 / 취소 공통 */
+.search-form button,
+.create-btn,
+.edit-btn,
+.delete-btn,
+.save-btn,
+.cancel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 검색 / 등록 / 저장 버튼 */
+.search-form button,
+.create-btn,
+.save-btn {
+    background: #8ea867;
+    color: white;
+}
+
+/* 수정 버튼 */
+.edit-btn {
+    background: #dfe8c8;
+    color: #3d4c22;
+}
+
+/* 삭제 버튼 */
+.delete-btn {
+    background: #e05c55;
+    color: white;
+}
+
+/* 취소 / 목록으로 버튼 */
+.cancel-btn {
+    background: #ecefe5;
+    color: #333;
+}
+
+
+/* =========================
+   테이블 영역
+   ========================= */
+
+/* 테이블이 길어지면 가로 스크롤 허용 */
+.table-wrap {
+    overflow-x: auto;
+}
+
+/* 음식점 목록 테이블 */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 960px;
+}
+
+/* 테이블 셀 공통 */
+.admin-table th,
+.admin-table td {
+    border: 1px solid #e5ead7;
+    padding: 14px 12px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+/* 테이블 헤더 */
+.admin-table th {
+    background: #f7f9f2;
+    color: #3b442c;
+    font-weight: 800;
+}
+
+/* 관리 버튼 줄바꿈 방지 */
+.action-cell {
+    white-space: nowrap;
+}
+
+/* 삭제 form 줄 안 깨지게 */
+.inline-form {
+    display: inline;
+}
+
+/* 데이터 없을 때 문구 */
+.empty-row {
+    color: #7a7a7a;
+    padding: 24px 12px;
+}
+
+
+/* =========================
+   하단 돌아가기 버튼 영역
+   ========================= */
+
+/* 링크 위쪽 여백 */
+.bottom-link-wrap {
+    margin-top: 24px;
+}
+
+/* 관리자 메인으로 돌아가기 버튼 */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 210px;
+    height: 44px;
+    padding: 0 18px;
+    border-radius: 12px;
+    background: #edf2e3;
+    border: 1px solid #cfd8b8;
+    color: #526833;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+/* 돌아가기 버튼 hover */
+.back-link:hover {
+    background: #dfe8c8;
+    color: #3f4d27;
+}
+
+
+/* =========================
+   등록/수정 폼 영역
+   ========================= */
+
+/* 폼 전체 세로 정렬 */
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 라벨 */
+.admin-form label {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2f3723;
+}
+
+/* input, select 공통 */
+.admin-form input,
+.admin-form select {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #cfd8b8;
+    border-radius: 12px;
+    outline: none;
+    font-size: 14px;
+    background: #fff;
+}
+
+/* 하단 버튼 묶음 */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
