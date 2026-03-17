@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(180deg, #f3f6ee 0%, #e8efe0 100%);
+            font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+            color: #2f3b2f;
+        }
+
+        .logo-wrap {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .signup-logo {
+            width: 190px;
+            height: auto;
+            display: inline-block;
+        }
+
+        .page {
+            max-width: 620px; 
+            margin: 36px auto; 
+            padding: 32px 24px 46px;
+            background: #fbfcf8;
+            border: 1px solid #d7dfb9;
+            border-radius: 24px;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .title {
+            text-align: center;
+            font-size: 25px;
+            font-weight: 800;
+            color: #5F7A61;
+            margin: 8px 0 22px;
+            letter-spacing: -0.8px;
+            font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+        }
+
+        .top-line {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 7px;
+            color: #6a7568;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .divider {
+            border-bottom: 1px solid #dde3d4;
+            margin-bottom: 20px;
+        }
+
+        .form-table {
+            width: 100%;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 10px;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        .label {
+            height: 46px;     
+            display: flex;
+            align-items: center;     
+            justify-content: center;  
+            padding-top: 0;
+            margin: 0;
+            line-height: 1;
+            font-size: 15px;
+            font-weight: 700;
+            color: #435343;
+        }
+
+        .label .req {
+            color: #c0392b;
+            margin-left: 2px;
+        }
+
+        .input-wrap {
+            width: 100%;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input,
+        .select,
+        .birth-input {
+            width: 100%;
+            height: 45px;
+            border: 1px solid #cfd8c2;
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 0 14px;
+            font-size: 12px;
+            color: #2f3b2f;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .input::placeholder,
+        .birth-input::placeholder {
+            color: #a0a8a0;
+        }
+
+        .input:focus,
+        .select:focus,
+        .birth-input:focus {
+            border-color: #5f7a61;
+            box-shadow: 0 0 0 4px rgba(95, 122, 97, 0.12);
+        }
+
+        .action-btn {
+            flex: 0 0 120px;
+            height: 45px;
+            border: none;
+            background: #8faa7a;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 12px;
+            box-sizing: border-box;
+            padding: 0 14px;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: #6f8d59;
+        }
+
+        .full-btn {
+            width: 100%;
+            height: 45px;
+            border: none;
+            background: #8faa7a;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 12px;
+            box-sizing: border-box;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+
+        .full-btn:hover {
+            background: #6f8d59;
+        }
+
+        .check-message {
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .check-message.success {
+            color: #2e7d32;
+        }
+
+        .check-message.error {
+            color: #c62828;
+        }
+
+        .check-message.info {
+            color: #7b8579;
+        }
+
+        .gender-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            align-items: center;
+            min-height: 50px;
+            padding-top: 4px;
+        }
+
+        .radio-item,
+        .check-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #4e5d4e;
+        }
+
+        .radio-item input[type="radio"],
+        .check-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #6f8d59;
+            cursor: pointer;
+        }
+
+        .birth-row {
+            display: grid;
+            grid-template-columns: 1fr 26px 1fr 26px 1fr;
+            gap: 0;
+            align-items: center;
+        }
+
+        .slash {
+            text-align: center;
+            font-size: 22px;
+            color: #b8beb5;
+        }
+
+        .address-block .input {
+            margin-top: 10px;
+        }
+
+        .path-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 24px;
+            padding-top: 8px;
+        }
+
+        .agree-box {
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            padding-top: 8px;
+        }
+
+        .submit-area {
+            margin-top: 34px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            width: 85%;
+            height: 52px;
+            border: none;
+            border-radius: 14px;
+            background: #8faa7a;
+            color: #fff;
+            font-size: 22px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 20px rgba(111, 141, 89, 0.18);
+        }
+
+        .submit-btn:hover {
+            background: #6f8d59;
+        }
+
+        @media (max-width: 768px) {
+            .page {
+                margin: 20px 16px;
+                padding: 24px 18px 36px;
+            }
+
+            .signup-logo {
+                width: 180px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .label {
+                padding-top: 0;
+                font-size: 15px;
+            }
+
+            .input-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-btn {
+                width: 100%;
+                flex: 0 0 auto;
+            }
+
+            .birth-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .slash {
+                display: none;
+            }
+
+            .path-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .submit-btn {
+                height: 52px;
+                font-size: 16px;
+            }
+        }
+
+        .site-footer {
+            margin-top: 60px;
+            padding: 36px 20px 28px;
+            background: #e8efe0;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #6c7369;
+        }
+
+        .footer-links a {
+            color: #6c7369;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links span {
+            color: #8b9186;
+        }
+
+        .footer-copy {
+            margin-top: 18px;
+            font-size: 16px;
+            color: #7d847a;
+            font-weight: 500;
+        }
+
+        .site-footer {
+            margin-top: 40px;
+            padding: 28px 16px 24px;
+        }
+
+        .footer-links {
+            gap: 10px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer-copy {
+            font-size: 14px;
+            margin-top: 14px;
+        }
+
+        /* 카카오 로그인 시 나오는 문구 숨겨버리기 */
+        .kakao-guide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="logo-wrap">
+            <img src="/static/img/main_logo.png" alt="흑백로그 로고" class="signup-logo">
+        </div>
+        <br>
+            <h1 class="title">회원가입</h1>
+
+            {% if social_data %}
+                <p style="text-align:center; color:#5f7a61; font-size:14px; font-weight:700; margin:0 0 18px;">
+                    간편 로그인 정보가 자동 입력되었습니다. 나머지 정보를 입력하고 가입을 완료해주세요.
+                </p>
+            {% endif %}
+
+        <div class="top-line">* 필수입력사항</div>
+        <div class="divider"></div>
+
+        {% set form_data = form_data or {} %}
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <script>
+                    alert("{{ messages[-1] }}");
+                </script>
+            {% endif %}
+        {% endwith %}
+
+
+        <form action="/signup" method="post" id="signupForm" novalidate>
+            <input
+                type="hidden"
+                name="email_checked"
+                id="email_checked"
+                value="{{ 'true' if social_data and social_data.provider != 'KAKAO' else 'false' }}"
+            >
+            <input
+                type="hidden"
+                name="checked_email_value"
+                id="checked_email_value"
+                value="{% if social_data and social_data.provider != 'KAKAO' %}{{ social_data.email }}{% else %}{{ form_data.get('email', '') }}{% endif %}"
+            >
+            <input type="hidden" name="nickname_checked" id="nickname_checked" value="{{ 'true' if form_data.get('nickname') and social_data and form_data.get('nickname') == social_data.get('nickname') else 'false' }}">
+            <input type="hidden" name="checked_nickname_value" id="checked_nickname_value" value="{{ form_data.get('nickname', social_data.nickname if social_data else '') }}">
+
+            <div class="form-table">
+                <div class="form-row">
+                    <label class="label" for="email">이메일<span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <div class="input-row">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="input"
+                                placeholder="예: blackwhitelog@gmail.com"
+                                value="{% if social_data and social_data.provider != 'KAKAO' %}{{ social_data.email }}{% else %}{{ form_data.get('email', '') }}{% endif %}"
+                                {% if social_data and social_data.provider != 'KAKAO' %}readonly{% endif %}
+                                required
+                            >
+
+                            {% if not social_data or (social_data and social_data.provider == 'KAKAO') %}
+                            <button type="button" class="action-btn" id="checkEmailBtn">중복 확인</button>
+                            {% endif %}
+                        </div>
+
+                        {% if social_data and social_data.provider == 'KAKAO' %}
+                        <div class="check-message info kakao-guide">
+                            카카오 회원가입은 이메일을 직접 입력하고 중복 확인을 해주세요.
+                        </div>
+                        {% endif %}
+
+                        <div id="emailMessage" class="check-message"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label class="label" for="nickname">닉네임<span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <div class="input-row">
+                            <input
+                                type="text"
+                                id="nickname"
+                                name="nickname"
+                                class="input"
+                                placeholder="닉네임을 입력해주세요"
+                                value="{{ form_data.get('nickname', social_data.nickname if social_data else '') }}"
+                                required
+                            >
+                            <button type="button" class="action-btn" id="checkNicknameBtn">중복 확인</button>
+                        </div>
+                        <div id="nicknameMessage" class="check-message"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label class="label" for="password">비밀번호<span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <input type="password" id="password" name="password" class="input" placeholder="비밀번호를 입력해주세요" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label class="label" for="password_confirm">비밀번호 확인<span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <input type="password" id="password_confirm" name="password_confirm" class="input" placeholder="비밀번호를 한번 더 입력해주세요" required>
+                        <div id="passwordMessage" class="check-message"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label class="label">성별<span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <div class="gender-group">
+                            <label class="radio-item">
+                                <input type="radio" name="gender" value="male" {% if form_data.get('gender') == 'male' %}checked{% endif %} required>
+                                남자
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="gender" value="female" {% if form_data.get('gender') == 'female' %}checked{% endif %} required>
+                                여자
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="gender" value="none" {% if form_data.get('gender') == 'none' %}checked{% endif %} required>
+                                선택안함
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label class="label">생년월일<span class="req">*</span></label>
+                    <div class="input-wrap">
+                        <div class="birth-row">
+                            <input
+                                type="text"
+                                name="birth_year"
+                                class="birth-input"
+                                placeholder="YYYY"
+                                maxlength="4"
+                                inputmode="numeric"
+                                value="{{ form_data.get('birth_year', '') }}"
+                                required
+                            >
+                            <div class="slash">/</div>
+                            <input
+                                type="text"
+                                name="birth_month"
+                                class="birth-input"
+                                placeholder="MM"
+                                maxlength="2"
+                                inputmode="numeric"
+                                value="{{ form_data.get('birth_month', '') }}"
+                                required
+                            >
+                            <div class="slash">/</div>
+                            <input
+                                type="text"
+                                name="birth_day"
+                                class="birth-input"
+                                placeholder="DD"
+                                maxlength="2"
+                                inputmode="numeric"
+                                value="{{ form_data.get('birth_day', '') }}"
+                                required
+                            >
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="form-row">
+                    <label class="label">주소<span class="req">*</span></label>
+                    <div class="input-wrap address-block">
+                        <button type="button" class="full-btn" onclick="execDaumPostcode()"><span>🔍 주소 검색</span></button>
+
+                        <input type="text" id="postcode" name="postcode" class="input" placeholder="우편번호" value="{{ form_data.get('postcode', '') }}" readonly required>
+                        <input type="text" id="roadAddress" name="roadAddress" class="input" placeholder="도로명 주소" value="{{ form_data.get('roadAddress', '') }}" readonly required>
+                        <input type="text" id="jibunAddress" name="jibunAddress" class="input" placeholder="지번 주소" value="{{ form_data.get('jibunAddress', '') }}" readonly>
+                        <input type="text" id="detailAddress" name="detailAddress" class="input" placeholder="상세주소를 입력해주세요" value="{{ form_data.get('detailAddress', '') }}">
+                        <input type="text" id="extraAddress" name="extraAddress" class="input" placeholder="참고항목" value="{{ form_data.get('extraAddress', '') }}" readonly>
+                    </div>
+                </div>
+                <br><br>
+
+                <div class="form-row">
+                    <label class="label">혜택 알림</label>
+                    <div class="input-wrap">
+                        <div class="agree-box">
+                            <label class="check-item">
+                                <input type="checkbox" name="ad_agree" value="Y" {% if form_data.get('ad_agree') == 'Y' %}checked{% endif %}>
+                                (선택) 할인 혜택 및 이벤트 정보 수신에 동의합니다.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-area">
+                <button type="submit" class="submit-btn">가입하기</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function execDaumPostcode() {
+            new kakao.Postcode({
+                oncomplete: function(data) {
+                    let roadAddr = data.roadAddress;
+                    let extraRoadAddr = '';
+
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraRoadAddr += data.bname;
+                    }
+
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+
+                    if (extraRoadAddr !== '') {
+                        extraRoadAddr = ' (' + extraRoadAddr + ')';
+                    }
+
+                    document.getElementById('postcode').value = data.zonecode;
+                    document.getElementById('roadAddress').value = roadAddr || '';
+                    document.getElementById('jibunAddress').value = data.jibunAddress || '';
+                    document.getElementById('extraAddress').value = extraRoadAddr;
+                    document.getElementById('detailAddress').focus();
+                }
+            }).open();
+        }
+
+        const emailInput = document.getElementById("email");
+        const nicknameInput = document.getElementById("nickname");
+        const passwordInput = document.getElementById("password");
+        const passwordConfirmInput = document.getElementById("password_confirm");
+
+        const emailMessage = document.getElementById("emailMessage");
+        const nicknameMessage = document.getElementById("nicknameMessage");
+        const passwordMessage = document.getElementById("passwordMessage");
+
+        const isSocialSignup = {{ 'true' if social_data else 'false' }};
+        const isKakaoSignup = {{ 'true' if social_data and social_data.provider == 'KAKAO' else 'false' }};
+
+        const emailChecked = document.getElementById("email_checked");
+        const checkedEmailValue = document.getElementById("checked_email_value");
+
+        const nicknameChecked = document.getElementById("nickname_checked");
+        const checkedNicknameValue = document.getElementById("checked_nickname_value");
+
+        const postcodeInput = document.getElementById("postcode");
+        const roadAddressInput = document.getElementById("roadAddress");
+        const detailAddressInput = document.getElementById("detailAddress");
+
+        const birthYearInput = document.querySelector('input[name="birth_year"]');
+        const birthMonthInput = document.querySelector('input[name="birth_month"]');
+        const birthDayInput = document.querySelector('input[name="birth_day"]');
+        const currentYear = new Date().getFullYear();
+
+        function onlyNumber(value) {
+            return value.replace(/\D/g, "");
+        }
+
+        birthYearInput.addEventListener("input", function () {
+            let value = onlyNumber(this.value);
+
+            if (value.length === 4) {
+                const yearNum = parseInt(value, 10);
+                if (yearNum >= currentYear) {
+                    value = String(currentYear);
+                }
+            }
+
+            this.value = value;
+        });
+
+        birthMonthInput.addEventListener("input", function () {
+            let value = onlyNumber(this.value);
+
+            if (value.length >= 2) {
+                let monthNum = parseInt(value, 10);
+
+                if (monthNum < 1) monthNum = 1;
+                if (monthNum > 12) monthNum = 12;
+
+                value = String(monthNum).padStart(2, "0");
+            }
+
+            this.value = value;
+        });
+
+        birthDayInput.addEventListener("input", function () {
+            let value = onlyNumber(this.value);
+
+            if (value.length >= 2) {
+                let dayNum = parseInt(value, 10);
+
+                if (dayNum < 1) dayNum = 1;
+                if (dayNum > 31) dayNum = 31;
+
+                value = String(dayNum).padStart(2, "0");
+            }
+
+            this.value = value;
+        });
+        const genderInputs = document.querySelectorAll('input[name="gender"]');
+
+        function resetEmailCheck() {
+            emailChecked.value = "false";
+            checkedEmailValue.value = "";
+            emailMessage.textContent = "";
+            emailMessage.className = "check-message";
+        }
+
+        function resetNicknameCheck() {
+            nicknameChecked.value = "false";
+            checkedNicknameValue.value = "";
+            nicknameMessage.textContent = "";
+            nicknameMessage.className = "check-message";
+        }
+
+        function checkPasswordMatch() {
+            const password = passwordInput.value;
+            const passwordConfirm = passwordConfirmInput.value;
+
+            if (!password && !passwordConfirm) {
+                passwordMessage.textContent = "";
+                passwordMessage.className = "check-message";
+                return;
+            }
+
+            if (!passwordConfirm) {
+                passwordMessage.textContent = "비밀번호 확인을 입력해주세요.";
+                passwordMessage.className = "check-message info";
+                return;
+            }
+
+            if (password === passwordConfirm) {
+                passwordMessage.textContent = "비밀번호가 일치합니다.";
+                passwordMessage.className = "check-message success";
+            } else {
+                passwordMessage.textContent = "비밀번호가 일치하지 않습니다.";
+                passwordMessage.className = "check-message error";
+            }
+        }
+
+        if (emailInput && !emailInput.readOnly) {
+            emailInput.addEventListener("input", resetEmailCheck);
+        }
+        nicknameInput.addEventListener("input", resetNicknameCheck);
+        if (passwordInput && passwordConfirmInput) {
+            passwordInput.addEventListener("input", checkPasswordMatch);
+            passwordConfirmInput.addEventListener("input", checkPasswordMatch);
+        }
+
+
+        const checkEmailBtn = document.getElementById("checkEmailBtn");
+        if (checkEmailBtn) {
+            checkEmailBtn.addEventListener("click", async function () {
+                const value = emailInput.value.trim();
+
+                if (!emailInput.checkValidity()) {
+                    emailInput.reportValidity();
+                    emailInput.focus();
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`/api/check-duplicate?type=email&value=${encodeURIComponent(value)}`);
+                    const data = await response.json();
+
+                    emailMessage.textContent = data.message;
+                    emailMessage.className = data.available ? "check-message success" : "check-message error";
+
+                    if (data.available) {
+                        emailChecked.value = "true";
+                        checkedEmailValue.value = value;
+                    } else {
+                        emailChecked.value = "false";
+                        checkedEmailValue.value = "";
+                        emailInput.focus();
+                    }
+                } catch (error) {
+                    alert("이메일 중복 확인 중 오류가 발생했습니다.");
+                }
+            });
+        }
+
+
+        document.getElementById("checkNicknameBtn").addEventListener("click", async function () {
+            const value = nicknameInput.value.trim();
+
+            if (!value) {
+                alert("닉네임을 입력해주세요.");
+                nicknameInput.focus();
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/check-duplicate?type=nickname&value=${encodeURIComponent(value)}`);
+                const data = await response.json();
+
+                nicknameMessage.textContent = data.message;
+                nicknameMessage.className = data.available ? "check-message success" : "check-message error";
+
+                if (data.available) {
+                    nicknameChecked.value = "true";
+                    checkedNicknameValue.value = value;
+                } else {
+                    nicknameChecked.value = "false";
+                    checkedNicknameValue.value = "";
+                    nicknameInput.focus();
+                }
+            } catch (error) {
+                alert("닉네임 중복 확인 중 오류가 발생했습니다.");
+            }
+        });
+
+
+        document.getElementById("signupForm").addEventListener("submit", function (e) {
+            const currentEmail = emailInput.value.trim();
+            const currentNickname = nicknameInput.value.trim();
+            const password = passwordInput ? passwordInput.value : "";
+            const passwordConfirm = passwordConfirmInput ? passwordConfirmInput.value : "";
+
+            const birthYear = birthYearInput.value.trim();
+            const birthMonth = birthMonthInput.value.trim();
+            const birthDay = birthDayInput.value.trim();
+
+            const postcode = postcodeInput.value.trim();
+            const roadAddress = roadAddressInput.value.trim();
+            const detailAddress = detailAddressInput.value.trim();
+
+            const genderChecked = Array.from(genderInputs).some(input => input.checked);
+
+            // 1. 이메일 입력
+            if (!currentEmail) {
+                e.preventDefault();
+                alert("이메일을 입력해주세요.");
+                emailInput.focus();
+                return;
+            }
+
+            // 3. 이메일 중복확인
+            if (!isSocialSignup || isKakaoSignup) {
+                if (emailChecked.value !== "true" || checkedEmailValue.value !== currentEmail) {
+                    e.preventDefault();
+                    alert("이메일 중복 확인을 해주세요.");
+                    emailInput.focus();
+                    return;
+                }
+            }
+
+            // 5. 닉네임 중복확인
+            if (nicknameChecked.value !== "true" || checkedNicknameValue.value !== currentNickname) {
+                e.preventDefault();
+                alert("닉네임 중복 확인을 해주세요.");
+                nicknameInput.focus();
+                return;
+            }
+
+            if (!password) {
+                e.preventDefault();
+                alert("비밀번호를 입력해주세요.");
+                passwordInput.focus();
+                return;
+            }
+
+            if (!passwordConfirm) {
+                e.preventDefault();
+                alert("비밀번호 확인을 입력해주세요.");
+                passwordConfirmInput.focus();
+                return;
+            }
+
+            if (password !== passwordConfirm) {
+                e.preventDefault();
+                passwordMessage.textContent = "비밀번호가 일치하지 않습니다.";
+                passwordMessage.className = "check-message error";
+                passwordConfirmInput.focus();
+                return;
+            }
+
+            // 9. 성별
+            if (!genderChecked) {
+                e.preventDefault();
+                alert("성별을 선택해주세요.");
+                genderInputs[0].focus();
+                return;
+            }
+
+            // 10. 생년월일
+            if (!birthYear) {
+                e.preventDefault();
+                alert("출생연도를 입력해주세요.");
+                birthYearInput.focus();
+                return;
+            }
+
+            if (!birthMonth) {
+                e.preventDefault();
+                alert("출생월을 입력해주세요.");
+                birthMonthInput.focus();
+                return;
+            }
+
+            if (!birthDay) {
+                e.preventDefault();
+                alert("출생일을 입력해주세요.");
+                birthDayInput.focus();
+                return;
+            }
+
+            // 11. 주소검색
+            if (!postcode || !roadAddress) {
+                e.preventDefault();
+                alert("주소 검색을 통해 주소를 입력해주세요.");
+                document.querySelector(".full-btn").focus();
+                return;
+            }
+        });
+    </script>
+
+    <footer class="site-footer">
+    <div class="footer-links">
+        <a href="#">이용약관</a>
+        <span>|</span>
+        <a href="#">개인정보처리방침</a>
+        <span>|</span>
+        <a href="#">책임의 한계와 법적고지</a>
+        <span>|</span>
+        <a href="#">회원정보</a>
+        <span>|</span>
+        <a href="#">고객센터</a>
+    </div>
+    <div class="footer-copy">
+        Copyright ⓒ 흑백로그 Corp. All Rights Reserved.
+    </div>
+</footer>
+</body>
+</html>

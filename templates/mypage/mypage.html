@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
+</head>
+<body>
+    <div class="mypage-page">
+        <div class="mypage-container">
+
+            <div class="mypage-header">
+                <div class="mypage-profile-icon">
+                    <span>👤</span>
+                </div>
+
+                <div class="mypage-title-wrap">
+                    <h1>마이페이지</h1>
+                    <p>내 정보와 활동을 확인해보세요</p>
+                </div>
+            </div>
+
+            <div class="mypage-info-box">
+                <div class="mypage-info-row">
+                    <span class="mypage-info-label">닉네임</span>
+                    <span class="mypage-info-value">{{ user_nickname }}</span>
+                </div>
+
+                <div class="mypage-info-row">
+                    <span class="mypage-info-label">이메일</span>
+                    <span class="mypage-info-value">{{ user_email }}</span>
+                </div>
+            </div>
+
+            <div class="mypage-edit-box">
+                <div class="mypage-edit-title">닉네임 변경</div>
+
+                <form action="{{ url_for('mypage.update_nickname') }}" method="POST" class="mypage-edit-form">
+                    <input
+                        type="text"
+                        name="nickname"
+                        value="{{ user_nickname }}"
+                        class="mypage-edit-input"
+                        maxlength="12"
+                        required
+                    >
+                    <button type="submit" class="mypage-edit-btn">변경</button>
+                </form>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="nickname-flash {{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <div class="mypage-menu-grid">
+                <a href="{{ url_for('mypage.mypage_reviews') }}" class="mypage-menu-btn">
+                    내 리뷰 보기
+                </a>
+
+                <a href="{{ url_for('mypage.mypage_favorites') }}" class="mypage-menu-btn">
+                    즐겨찾기
+                </a>
+
+                <a href="{{ url_for('mypage.mypage_visits') }}" class="mypage-menu-btn">
+                    방문 기록
+                </a>
+
+                <a href="{{ url_for('mypage.mypage_achievements') }}" class="mypage-menu-btn">
+                    업적 / 랭킹
+                </a>
+            </div>
+
+            <div class="mypage-bottom-actions">
+                <a href="{{ url_for('index') }}" class="mypage-main-btn">
+                    메인으로 돌아가기
+                </a>
+
+                <form action="{{ url_for('login.withdraw') }}" method="POST" onsubmit="return confirm('정말 회원탈퇴 하시겠습니까?');">
+                    <button type="submit" class="mypage-withdraw-btn">
+                        회원탈퇴
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

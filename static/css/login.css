@@ -1,0 +1,551 @@
+* {
+    box-sizing: border-box;
+}
+
+body.login-page {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+    background: linear-gradient(180deg, #f3f6ee 0%, #e8efe0 100%);
+    color: #2f3b2f;
+}
+
+/* =========================
+전체 정렬
+========================= */
+.login-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 24px 40px;
+}
+
+/* =========================
+로그인 카드
+========================= */
+.login-card {
+    width: 100%;
+    max-width: 430px;
+    background: #fbfcf8;
+    border: 1px solid #d7dfb9;
+    border-radius: 24px;
+    padding: 40px 32px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+/* =========================
+로고 영역
+========================= */
+.login-logo {
+    margin-bottom: 10px;
+}
+
+.login-logo img {
+    width: 180px;
+    height: auto;
+    display: inline-block;
+}
+
+.login-heading {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #304330;
+}
+
+.login-desc {
+    margin: 12px 0 28px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #6a7568;
+}
+
+/* =========================
+폼
+========================= */
+.login-form {
+    text-align: left;
+}
+
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #435343;
+}
+
+.input-group input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #cfd8c2;
+    border-radius: 12px;
+    background: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-group input::placeholder {
+    color: #a0a8a0;
+}
+
+.input-group input:focus {
+    border-color: #5f7a61;
+    box-shadow: 0 0 0 4px rgba(95, 122, 97, 0.12);
+}
+
+/* =========================
+기본 로그인 버튼
+========================= */
+.login-btn{
+    width:100%;
+    height:48px;
+    border:none;
+    border-radius:12px;
+
+    background:#8faa7a;   /* 연한 녹색 */
+    color:white;
+
+    font-size:15px;
+    font-weight:700;
+
+    cursor:pointer;
+    transition:all 0.2s ease;
+}
+
+.login-btn:hover{
+    background:#6f8d59;  /* hover 조금 진하게 */
+}
+/* =========================
+구분선
+========================= */
+.divider {
+    position: relative;
+    margin: 28px 0 18px;
+    text-align: center;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 38%;
+    height: 1px;
+    background: #dde3d4;
+}
+
+.divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 38%;
+    height: 1px;
+    background: #dde3d4;
+}
+
+.divider span {
+    display: inline-block;
+    padding: 0 12px;
+    background: #fbfcf8;
+    position: relative;
+    z-index: 1;
+    font-size: 13px;
+    color: #889287;
+}
+
+/* 소셜 로그인 */
+
+.social-login{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.social-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    padding:12px;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:bold;
+    text-decoration:none;
+
+    transition:0.2s;
+}
+
+/* 네이버 */
+
+.social-btn.naver{
+    background:#03C75A;
+    color:white;
+}
+
+/* 카카오 */
+
+.social-btn.kakao{
+    background:#FEE500;
+    color:#3C1E1E;
+}
+
+/* 구글 */
+
+.social-btn.google{
+    background:white;
+    border:1px solid #ddd;
+    color:#333;
+}
+
+/* hover */
+
+.social-btn:hover{
+    transform:translateY(-2px);
+}
+
+/* =========================
+하단 링크
+========================= */
+.login-footer {
+    margin-top: 22px;
+    font-size: 13px;
+    color: #809080;
+}
+
+.login-footer a {
+    color: #5f7a61;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.footer-dot {
+    margin: 0 8px;
+    color: #b0b8af;
+}
+
+.login-desc{
+    font-size:16px;
+    font-weight:600;
+    color:#5f7a61;
+    margin-bottom:30px;
+
+    animation: fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+
+    0%{
+        opacity:0;
+        transform:translateY(20px);
+    }
+
+    100%{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.social-login button{
+    width:100%;
+    height:45px;
+    border:none;
+    border-radius:8px;
+    font-size:14px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;   /* 아이콘과 글자 간격 */
+    cursor:pointer;
+}
+
+/* 아이콘 크기 */
+.social-icon{
+    width:18px;
+    height:18px;
+}
+
+.join-text{
+    margin-top:16px;
+    font-size:14px;
+    color:#7c8878;
+}
+
+.join-text a{
+    color:#5f7a61;
+    font-weight:700;
+    text-decoration:none;
+}
+
+.join-text a:hover{
+    text-decoration:underline;
+}
+
+.login-links{
+    margin-top:22px;
+    text-align:center;
+    font-size:13px;
+    color:#97a197;
+}
+
+.login-links a{
+    color:#6f7d6e;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.login-links a:hover{
+    text-decoration:underline;
+}
+
+.footer-dot{
+    margin:0 8px;
+    color:#c3c9c0;
+}
+
+/* 로그인 에러 메시지 */
+.login-error{
+    margin-bottom:14px;
+    padding:12px;
+    border-radius:10px;
+    background:#fff1f1;
+    border:1px solid #f3bcbc;
+    color:#c0392b;
+    font-size:14px;
+    text-align:center;
+}
+
+
+/* 로그인 페이지 footer */
+
+.login-footer{
+    width:100%;
+    text-align:center;
+    font-size:13px;
+    color:#666;
+    padding:16px 0 20px;
+    margin-top:12px;
+}
+
+.login-footer-links{
+    margin-bottom:6px;
+    line-height:1.6;
+}
+
+.login-footer-links a{
+    text-decoration:none;
+    color:#666;
+    margin:0 6px;
+}
+
+.login-footer-links a:hover{
+    text-decoration:underline;
+}
+
+.login-footer-copy{
+    font-size:12px;
+    color:#888;
+}
+
+.social-btn{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.social-icon{
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* =========================
+소셜 계정 연결 모달
+========================= */
+.social-link-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(37, 48, 34, 0.36);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9999;
+}
+
+.social-link-modal-backdrop.hidden {
+    display: none;
+}
+
+.social-link-modal {
+    position: relative;
+    width: 100%;
+    max-width: 430px;
+    background: #fbfcf8;
+    border: 1px solid #d8dfcb;
+    border-radius: 24px;
+    padding: 28px 24px 22px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+    animation: socialModalUp 0.24s ease;
+}
+
+@keyframes socialModalUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.social-link-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: #eef3e6;
+    color: #5d6d58;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.social-link-close:hover {
+    background: #e3ebd9;
+    transform: scale(1.05);
+}
+
+.social-link-badge {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #edf4e6;
+    color: #5f7a61;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.social-link-title {
+    margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: 800;
+    color: #304330;
+}
+
+.social-link-desc {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.75;
+    color: #677463;
+}
+
+.social-link-info {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 16px;
+    background: #f4f7ef;
+    border: 1px solid #e0e7d5;
+}
+
+.social-link-info > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    font-size: 13px;
+    padding: 6px 0;
+}
+
+.social-link-info span {
+    color: #7f8b7a;
+}
+
+.social-link-info strong {
+    color: #314030;
+    text-align: right;
+    word-break: break-all;
+}
+
+.social-link-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.social-link-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.social-link-btn.primary {
+    background: #8faa7a;
+    color: #fff;
+}
+
+.social-link-btn.primary:hover {
+    background: #6f8d59;
+}
+
+.social-link-btn.secondary {
+    background: #f3f6ee;
+    border: 1px solid #d5deca;
+    color: #50634f;
+}
+
+.social-link-btn.secondary:hover {
+    background: #eaf0e0;
+}
+
+.social-link-cancel {
+    display: block;
+    margin-top: 14px;
+    text-align: center;
+    font-size: 13px;
+    color: #7b8778;
+    text-decoration: none;
+}
+
+.social-link-cancel:hover {
+    text-decoration: underline;
+}

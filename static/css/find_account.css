@@ -1,0 +1,228 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f4f6ef;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    color: #222;
+}
+
+.find-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+}
+
+.find-card {
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    border: 1px solid #dbe2cc;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.find-card h1 {
+    margin: 0 0 10px;
+    font-size: 30px;
+    font-weight: 800;
+    color: #2c341f;
+}
+
+.find-desc {
+    margin: 0 0 22px;
+    font-size: 14px;
+    color: #687255;
+    line-height: 1.5;
+}
+
+.flash-wrap {
+    margin-bottom: 18px;
+}
+
+.flash-message {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #f7faef;
+    border: 1px solid #d9e4bf;
+    color: #5f7540;
+    font-size: 14px;
+}
+
+.find-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.find-form label {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2f3723;
+}
+
+.find-form input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #cfd8b8;
+    border-radius: 12px;
+    outline: none;
+    font-size: 14px;
+    background: #fff;
+}
+
+.find-btn {
+    margin-top: 10px;
+    height: 46px;
+    border: none;
+    border-radius: 12px;
+    background: #8ea867;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.result-box {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 14px;
+    background: #edf2e3;
+    border: 1px solid #dbe2cc;
+}
+
+.result-box strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #3f4d27;
+}
+
+.result-box p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c341f;
+}
+
+.bottom-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.bottom-links a {
+    color: #526833;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* =========================
+비밀번호 재설정 - 인증번호 방식 추가
+========================= */
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.side-btn {
+    margin-top: 0;
+    flex-shrink: 0;
+    width: 130px;
+}
+
+.sub-btn {
+    background: #7d8f63;
+}
+
+.code-input-wrap {
+    position: relative;
+    flex: 1;
+}
+
+.code-input-wrap input {
+    padding-right: 72px;
+}
+
+.timer-text {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    font-weight: 700;
+    color: #d35b5b;
+    pointer-events: none;
+}
+
+.inline-message {
+    min-height: 20px;
+    margin-top: -2px;
+    margin-bottom: 4px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.inline-message.success {
+    color: #3b7c3f;
+}
+
+.inline-message.error {
+    color: #c84a4a;
+}
+
+.inline-message.info {
+    color: #687255;
+}
+
+.password-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 18px;
+    border-top: 1px solid #e5ebd8;
+}
+
+.hidden {
+    display: none;
+}
+
+.full-btn {
+    width: 100%;
+}
+
+.find-form input:focus {
+    border-color: #8ea867;
+    box-shadow: 0 0 0 3px rgba(142, 168, 103, 0.12);
+}
+
+.find-btn:hover {
+    opacity: 0.95;
+}
+
+@media (max-width: 560px) {
+    .input-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .side-btn {
+        width: 100%;
+    }
+
+    .bottom-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

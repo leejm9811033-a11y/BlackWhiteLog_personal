@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ restaurant_name }} 리뷰 관리</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_manage.css') }}">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>{{ restaurant_name }} 리뷰 관리</h1>
+        <p class="admin-subtitle">이 가게에 등록된 리뷰 목록입니다.</p>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-message">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="GET" class="admin-filter-form">
+            <label for="status">상태 필터</label>
+            <select name="status" id="status">
+                <option value="" {% if not selected_status %}selected{% endif %}>전체</option>
+                <option value="ACTIVE" {% if selected_status == 'ACTIVE' %}selected{% endif %}>ACTIVE</option>
+                <option value="HIDDEN" {% if selected_status == 'HIDDEN' %}selected{% endif %}>HIDDEN</option>
+            </select>
+            <button type="submit" class="admin-btn">적용</button>
+        </form>
+
+       <table class="admin-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>작성자</th>
+            <th>평점</th>
+            <th>내용</th>
+            <th>작성일</th>
+            <th>수정일</th>
+            <th>상태</th>
+            <th>관리</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for review in reviews %}
+        <tr>
+            <td>{{ review.review_id }}</td>
+            <td>{{ review.user_nickname }}</td>
+            <td>{{ review.rating }}</td>
+            <td>{{ review.content }}</td>
+            <td>{{ review.created_at }}</td>
+            <td>{{ review.updated_at }}</td>
+            <td>{{ review.status }}</td>
+            <td class="review-actions">
+                <a href="{{ url_for('admin.admin_edit_review', review_id=review.review_id) }}" class="btn-edit">
+                    수정
+                </a>
+
+                {% if review.status == 'ACTIVE' %}
+                <form action="{{ url_for('admin.admin_hide_review', review_id=review.review_id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn-hide">숨김</button>
+                </form>
+
+                <form action="{{ url_for('admin.admin_delete_review', review_id=review.review_id) }}" method="POST" style="display:inline;" onsubmit="return confirm('이 리뷰를 삭제 처리하시겠습니까?');">
+                    <button type="submit" class="btn-delete">삭제</button>
+                </form>
+
+                {% elif review.status == 'HIDDEN' %}
+                <form action="{{ url_for('admin.admin_restore_review', review_id=review.review_id) }}" method="POST" style="display:inline;">
+                    <button type="submit" class="btn-restore">복구</button>
+                </form>
+
+                <form action="{{ url_for('admin.admin_delete_review', review_id=review.review_id) }}" method="POST" style="display:inline;" onsubmit="return confirm('이 리뷰를 삭제 처리하시겠습니까?');">
+                    <button type="submit" class="btn-delete">삭제</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="8">등록된 리뷰가 없습니다.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+        <div class="admin-bottom-actions">
+            <a href="{{ url_for('admin.admin_review_restaurants') }}" class="btn-back">가게 목록으로 돌아가기</a>
+        </div>
+    </div>
+</body>
+</html>

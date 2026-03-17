@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>소셜 계정 연결</title>
+</head>
+<body>
+    <h2>소셜 계정 연결</h2>
+
+    <p>
+        {{ social_data.provider }} 계정으로 로그인했지만
+        아직 연결된 회원 계정이 없습니다.
+    </p>
+
+    <p>이미 가입한 회원이면 기존 계정으로 로그인해서 연결하세요.</p>
+    <p>처음 이용하는 회원이면 회원가입을 진행하세요.</p>
+
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('login.social_connect_existing') }}">기존 회원입니다</a>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <a href="{{ url_for('login.social_signup') }}">처음 가입합니다</a>
+    </div>
+</body>
+</html>

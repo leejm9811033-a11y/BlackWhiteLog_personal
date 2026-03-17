@@ -1,0 +1,391 @@
+/* =========================
+   관리자 공통 스타일
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f4f6ef;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    color: #222;
+}
+
+.admin-page {
+    padding: 40px 20px;
+}
+
+.admin-container {
+    max-width: 1150px;
+    margin: 40px auto;
+    background: #fbfbf8;
+    border: 1px solid #d9decc;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.admin-header {
+    margin-bottom: 24px;
+}
+
+.admin-header h1,
+.admin-container h1 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    font-weight: 800;
+    color: #2c341f;
+}
+
+.admin-header p,
+.admin-subtitle {
+    margin: 0 0 24px;
+    font-size: 14px;
+    color: #687255;
+    line-height: 1.6;
+}
+
+/* =========================
+   flash 메시지
+   ========================= */
+
+.flash-wrap {
+    margin-bottom: 18px;
+}
+
+.flash-message {
+    margin-bottom: 18px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background: #f7faef;
+    border: 1px solid #d9e4bf;
+    color: #5f7540;
+    font-size: 14px;
+}
+
+/* =========================
+   상단 검색 / 필터 / 액션 영역
+   ========================= */
+
+.admin-topbar,
+.admin-search-form,
+.admin-filter-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.search-form {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.search-form input,
+.search-form select,
+.admin-search-input,
+.admin-filter-form select,
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+    border: 1px solid #cfd8b8;
+    border-radius: 12px;
+    outline: none;
+    font-size: 14px;
+    background: #fff;
+}
+
+.search-form input,
+.search-form select,
+.admin-search-input,
+.admin-filter-form select,
+.admin-form input,
+.admin-form select {
+    height: 44px;
+    padding: 0 14px;
+}
+
+.admin-search-input {
+    min-width: 220px;
+}
+
+.admin-form textarea {
+    min-height: 120px;
+    padding: 12px 14px;
+    width: 100%;
+    resize: vertical;
+}
+
+/* =========================
+   버튼 공통
+   ========================= */
+
+.search-form button,
+.admin-btn,
+.primary-btn,
+.secondary-btn,
+.danger-btn,
+.back-link,
+.inline-btn,
+.btn-edit,
+.btn-hide,
+.btn-delete,
+.btn-restore,
+.btn-save,
+.btn-back,
+.admin-home-btn,
+.admin-card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 12px;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1;
+    transition: 0.2s ease;
+}
+
+.search-form button,
+.admin-btn,
+.primary-btn,
+.inline-btn,
+.btn-save,
+.admin-card-btn {
+    background: #8ea867;
+    color: #fff;
+}
+
+.secondary-btn,
+.back-link,
+.btn-back,
+.admin-home-btn {
+    background: #edf2e3;
+    border: 1px solid #cfd8b8;
+    color: #526833;
+}
+
+.btn-edit {
+    background: #eef4ff;
+    border: 1px solid #b9c9ea;
+    color: #2f4f88;
+}
+
+.btn-hide {
+    background: #fff8e8;
+    border: 1px solid #e6d3a1;
+    color: #8a6b12;
+}
+
+.btn-delete,
+.danger-btn {
+    background: #fff1f1;
+    border: 1px solid #e2b4b4;
+    color: #a13b3b;
+}
+
+.btn-restore {
+    background: #eef8ee;
+    border: 1px solid #b9d8b9;
+    color: #2f6b2f;
+}
+
+.search-form button:hover,
+.admin-btn:hover,
+.primary-btn:hover,
+.inline-btn:hover,
+.btn-save:hover,
+.admin-card-btn:hover {
+    background: #7e965b;
+}
+
+.secondary-btn:hover,
+.back-link:hover,
+.btn-back:hover,
+.admin-home-btn:hover {
+    background: #dfe8c8;
+    color: #3f4d27;
+}
+
+.btn-edit:hover {
+    background: #dfeaff;
+}
+
+.btn-hide:hover {
+    background: #fff1c8;
+}
+
+.btn-delete:hover,
+.danger-btn:hover {
+    background: #ffe1e1;
+}
+
+.btn-restore:hover {
+    background: #dcf1dc;
+}
+
+/* =========================
+   카드 / 대시보드
+   ========================= */
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.admin-card {
+    background: #f9fbf5;
+    border: 1px solid #dbe2cc;
+    border-radius: 18px;
+    padding: 24px;
+}
+
+.admin-card h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    font-weight: 800;
+    color: #2c341f;
+}
+
+.admin-card p {
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: #687255;
+    line-height: 1.6;
+}
+
+/* =========================
+   테이블
+   ========================= */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    min-width: 920px;
+}
+
+.admin-table th,
+.admin-table td {
+    border: 1px solid #e5ead7;
+    padding: 14px 12px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.admin-table th {
+    background: #f7f9f2;
+    color: #3b442c;
+    font-weight: 800;
+}
+
+.admin-table td.left {
+    text-align: left;
+}
+
+.action-cell,
+.review-actions {
+    white-space: nowrap;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.empty-row {
+    color: #7a7a7a;
+    padding: 24px 12px;
+}
+
+/* =========================
+   하단 링크 / 액션
+   ========================= */
+
+.bottom-link-wrap,
+.admin-bottom-actions,
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* =========================
+   폼
+   ========================= */
+
+.admin-form-card {
+    margin-bottom: 24px;
+    padding: 20px;
+    border: 1px solid #dbe2cc;
+    border-radius: 18px;
+    background: #fbfcf8;
+}
+
+.admin-form-card h2 {
+    margin: 0 0 14px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #2c341f;
+}
+
+.admin-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.admin-form .full {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.admin-form label,
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2f3723;
+}
+
+/* =========================
+   반응형
+   ========================= */
+
+@media (max-width: 900px) {
+    .admin-container {
+        margin: 20px;
+        padding: 24px;
+    }
+
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-table {
+        min-width: 760px;
+    }
+}

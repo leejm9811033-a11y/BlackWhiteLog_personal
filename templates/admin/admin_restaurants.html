@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 - 음식점 관리</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_restaurants.css') }}">
+</head>
+<body>
+    <div class="admin-page">
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>음식점 관리</h1>
+                <p>음식점 등록, 수정, 삭제를 관리할 수 있습니다.</p>
+            </div>
+
+            <!-- flash 메시지 -->
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-wrap">
+                        {% for message in messages %}
+                            <div class="flash-message">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="admin-topbar">
+                <!-- 검색 폼 -->
+                <form method="GET" action="{{ url_for('admin.admin_restaurants') }}" class="search-form">
+                    <input
+                        type="text"
+                        name="keyword"
+                        value="{{ keyword }}"
+                        placeholder="음식점 이름 검색"
+                    >
+                    <button type="submit">검색</button>
+                </form>
+
+                <!-- 등록 버튼 -->
+                <a href="{{ url_for('admin.admin_restaurant_create') }}" class="create-btn">
+                    + 음식점 등록
+                </a>
+            </div>
+
+            <div class="table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>음식점명</th>
+                            <th>카테고리</th>
+                            <th>지역</th>
+                            <th>주소</th>
+                            <th>전화번호</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if restaurants %}
+                            {% for restaurant in restaurants %}
+                                <tr>
+                                    <td>{{ restaurant.restaurant_id }}</td>
+                                    <td>{{ restaurant.restaurant_name }}</td>
+                                    <td>{{ restaurant.restaurant_category_name }}</td>
+                                    <td>{{ restaurant.region_sigungu or "-" }}</td>
+                                    <td>{{ restaurant.address or "-" }}</td>
+                                    <td>{{ restaurant.phone or "-" }}</td>
+                                    <td class="action-cell">
+                                        <a
+                                            href="{{ url_for('admin.admin_restaurant_edit', restaurant_id=restaurant.restaurant_id) }}"
+                                            class="edit-btn"
+                                        >
+                                            수정
+                                        </a>
+
+                                        <form
+                                            action="{{ url_for('admin.admin_restaurant_delete', restaurant_id=restaurant.restaurant_id) }}"
+                                            method="POST"
+                                            class="inline-form"
+                                            onsubmit="return confirm('정말 삭제하시겠습니까?');"
+                                        >
+                                            <button type="submit" class="delete-btn">삭제</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="empty-row">등록된 음식점이 없습니다.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bottom-link-wrap">
+                <a href="{{ url_for('admin.admin_page') }}" class="back-link">관리자 메인으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

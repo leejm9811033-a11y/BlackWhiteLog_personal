@@ -1,0 +1,785 @@
+:root {
+    --color-black: #111111;
+    --color-white: #ffffff;
+    --color-text: #333333;
+    --color-line: #d8ddd2;
+    --color-line-soft: #e9ede4;
+    --color-sage: #98ad8a;
+    --color-sage-dark: #6f8164;
+    --color-sage-light: #edf3e8;
+    --color-gray-btn: #f4f5f1;
+    --color-danger: #c55a5a;
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --shadow-card: 0 10px 30px rgba(17, 17, 17, 0.06);
+}
+
+.owner-menu-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top, rgba(152, 173, 138, 0.08), transparent 28%),
+        linear-gradient(180deg, #f7f8f4 0%, #eff2eb 100%);
+    color: var(--color-text);
+}
+
+.main-content {
+    width: min(1120px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 24px 0 42px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.menu-form-card,
+.registered-menu-card {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid rgba(216, 221, 210, 0.9);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    padding: 28px 30px;
+    backdrop-filter: blur(10px);
+}
+
+.section-title {
+    margin: 0 0 22px;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-black);
+    letter-spacing: -0.03em;
+}
+
+.sub-title {
+    margin: 0 0 14px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.form-message-list {
+    margin: 0 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-message-item {
+    margin: 0;
+    padding: 12px 14px;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: #f7faf4;
+    color: var(--color-black);
+    font-weight: 600;
+}
+
+.form-message-item.is-error {
+    border-color: #e4b6b6;
+    background: #fff5f5;
+    color: #8a3434;
+}
+
+.form-message-item.is-success {
+    border-color: #c9dbc0;
+    background: #f4faef;
+    color: #456039;
+}
+
+/* =========================
+   메뉴 등록
+   ========================= */
+.menu-upload-section,
+.menu-detail-section,
+.menu-option-section {
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--color-line-soft);
+}
+
+.upload-form-grid {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.image-upload-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.preview-image-wrap {
+    width: 160px;
+    height: 136px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    background: #f0f0ec;
+    position: relative;
+}
+
+.preview-empty {
+    width: 100%;
+    height: 100%;
+    background: #f0f0ec;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.image-file-input {
+    display: none;
+}
+
+.image-guide-text {
+    margin: 0;
+    font-size: 0.92rem;
+    color: #666666;
+    line-height: 1.5;
+    word-break: break-all;
+}
+
+.menu-input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-row {
+    width: 100%;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-row label,
+.field-group label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    height: 48px;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    padding: 0 14px;
+    background: var(--color-white);
+    color: var(--color-text);
+    outline: none;
+    font: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: var(--color-sage);
+    box-shadow: 0 0 0 4px rgba(152, 173, 138, 0.15);
+}
+
+.price-input-wrap {
+    position: relative;
+}
+
+.price-input-wrap input {
+    padding-right: 44px;
+}
+
+.price-unit {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666666;
+    font-weight: 700;
+}
+
+.horizontal-row {
+    display: grid;
+    grid-template-columns: 330px 1fr;
+    gap: 18px;
+    align-items: end;
+}
+
+.field-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.field-group label {
+    white-space: nowrap;
+}
+
+.category-group select,
+.description-group input {
+    min-width: 0;
+}
+
+/* =========================
+   버튼
+   ========================= */
+.point-btn,
+.sub-btn,
+.ghost-btn,
+.outline-btn,
+.menu-edit-btn,
+.menu-delete-btn,
+.pagination-btn,
+.confirm-bubble-btn {
+    height: 46px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    padding: 0 18px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.point-btn {
+    background: var(--color-sage);
+    border-color: var(--color-sage);
+    color: var(--color-white);
+}
+
+.point-btn:hover {
+    background: var(--color-sage-dark);
+    border-color: var(--color-sage-dark);
+}
+
+.sub-btn,
+.ghost-btn {
+    background: var(--color-gray-btn);
+    border-color: var(--color-line);
+    color: var(--color-black);
+}
+
+.sub-btn:hover,
+.ghost-btn:hover {
+    background: #ebeee8;
+    border-color: #cbd3c2;
+}
+
+.outline-btn {
+    background: var(--color-white);
+    border-color: var(--color-line);
+    color: var(--color-black);
+}
+
+.outline-btn:hover {
+    background: var(--color-sage-light);
+    border-color: var(--color-sage);
+}
+
+.upload-btn {
+    width: 100%;
+}
+
+.option-group-wrap {
+    margin-bottom: 16px;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.check-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-black);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.check-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-sage-dark);
+}
+
+.action-btn-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-line-soft);
+    flex-wrap: wrap;
+}
+
+a.ghost-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+/* =========================
+   등록된 메뉴
+   ========================= */
+.registered-menu-card {
+    margin-top: 0;
+}
+
+.registered-menu-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.registered-menu-card-header .section-title {
+    margin-bottom: 0;
+}
+
+.registered-menu-count {
+    margin: 0;
+    color: #666666;
+    font-weight: 700;
+}
+
+.registered-menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.registered-menu-item {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid var(--color-line-soft);
+    border-radius: var(--radius-md);
+    background: #fbfcfa;
+}
+
+.registered-menu-thumb {
+    width: 90px;
+    height: 90px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f1f1ec;
+    border: 1px solid var(--color-line);
+    flex-shrink: 0;
+}
+
+.registered-menu-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.registered-menu-thumb-empty {
+    width: 100%;
+    height: 100%;
+    background: #f1f1ec;
+}
+
+.registered-menu-info {
+    min-width: 0;
+}
+
+.registered-menu-name {
+    margin: 0 0 6px;
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: var(--color-black);
+}
+
+.registered-menu-price {
+    margin: 0;
+    color: #666666;
+    font-weight: 700;
+}
+
+.registered-menu-category,
+.registered-menu-status,
+.registered-menu-file {
+    margin: 4px 0 0;
+    color: #666666;
+    font-size: 0.95rem;
+    word-break: break-all;
+}
+
+.registered-menu-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.menu-edit-btn,
+.menu-delete-btn {
+    min-width: 84px;
+}
+
+.menu-edit-btn {
+    border: 1px solid var(--color-sage);
+    background: var(--color-sage-light);
+    color: var(--color-sage-dark);
+}
+
+.menu-edit-btn:hover {
+    background: #dfe9d6;
+}
+
+.menu-delete-btn {
+    border: 1px solid var(--color-line);
+    background: var(--color-white);
+    color: #555555;
+}
+
+.menu-delete-btn:hover {
+    border-color: #bfc8b6;
+    background: #f3f4ef;
+}
+
+.action-bubble-wrap {
+    position: relative;
+    display: inline-flex;
+}
+
+.confirm-bubble {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 20;
+    min-width: 210px;
+    background: #ffffff;
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    box-shadow: 0 12px 24px rgba(17, 17, 17, 0.12);
+    padding: 14px;
+}
+
+.confirm-bubble::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: 18px;
+    width: 14px;
+    height: 14px;
+    background: #ffffff;
+    border-left: 1px solid var(--color-line);
+    border-top: 1px solid var(--color-line);
+    transform: rotate(45deg);
+}
+
+.confirm-bubble-text {
+    margin: 0 0 12px;
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: var(--color-black);
+    line-height: 1.45;
+}
+
+.confirm-bubble-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.confirm-bubble-btn {
+    min-width: 64px;
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 10px;
+}
+
+.confirm-bubble-btn.is-yes {
+    background: var(--color-sage);
+    border-color: var(--color-sage);
+    color: #ffffff;
+}
+
+.confirm-bubble-btn.is-no {
+    background: #ffffff;
+    border-color: var(--color-line);
+    color: #555555;
+}
+
+.confirm-bubble-btn.is-delete {
+    background: var(--color-danger);
+    border-color: var(--color-danger);
+    color: #ffffff;
+}
+
+/* =========================
+   빈 상태
+   ========================= */
+.empty-menu-message {
+    margin: 0;
+    padding: 28px 16px;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-md);
+    background: #fbfcfa;
+    color: #666666;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* =========================
+   페이지네이션
+   ========================= */
+.pagination-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+.pagination-list {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pagination-btn {
+    min-width: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: var(--color-white);
+    border-color: var(--color-line);
+    color: var(--color-black);
+}
+
+.pagination-btn:hover {
+    background: var(--color-sage-light);
+    border-color: var(--color-sage);
+}
+
+.pagination-btn.is-active {
+    background: var(--color-sage);
+    border-color: var(--color-sage);
+    color: var(--color-white);
+}
+
+.pagination-nav {
+    min-width: 72px;
+}
+
+/* =========================
+   반응형
+   ========================= */
+@media (max-width: 860px) {
+    .main-content {
+        width: min(100%, calc(100% - 20px));
+        padding: 0 0 28px;
+        gap: 10px;
+    }
+
+    .menu-form-card,
+    .registered-menu-card {
+        padding: 22px 18px;
+    }
+
+    .upload-form-grid,
+    .horizontal-row,
+    .registered-menu-item {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-image-wrap {
+        width: 100%;
+        height: 220px;
+    }
+
+    .registered-menu-thumb {
+        width: 100%;
+        height: 220px;
+    }
+
+    .field-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .action-btn-row {
+        flex-direction: column;
+    }
+
+    .registered-menu-actions {
+        width: 100%;
+    }
+
+    .registered-menu-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .confirm-bubble {
+        left: 0;
+        right: auto;
+    }
+
+    .confirm-bubble::before {
+        left: 18px;
+        right: auto;
+    }
+}
+
+/* =========================
+   가게 선택 토글
+   ========================= */
+.restaurant-toggle-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.restaurant-toggle-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.restaurant-toggle-item input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.restaurant-toggle-item span {
+    min-width: 120px;
+    height: 46px;
+    padding: 0 18px;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: var(--color-white);
+    color: var(--color-black);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.96rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.restaurant-toggle-item span:hover {
+    background: var(--color-sage-light);
+    border-color: var(--color-sage);
+}
+
+.restaurant-toggle-item input[type="radio"]:checked + span {
+    background: var(--color-sage);
+    border-color: var(--color-sage);
+    color: var(--color-white);
+    box-shadow: 0 6px 14px rgba(152, 173, 138, 0.22);
+}
+
+.restaurant-toggle-item input[type="radio"]:focus + span {
+    box-shadow: 0 0 0 4px rgba(152, 173, 138, 0.15);
+}
+
+/* =========================
+   확인 말풍선
+   - 이전 CSS 클래스명 유지하면서
+     새 JS 클래스명도 같이 대응
+   ========================= */
+.confirm-bubble__text {
+    margin: 0 0 12px;
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: var(--color-black);
+    line-height: 1.45;
+}
+
+.confirm-bubble__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.confirm-bubble__btn {
+    min-width: 64px;
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.confirm-bubble__btn.yes-btn {
+    background: var(--color-sage);
+    border-color: var(--color-sage);
+    color: #ffffff;
+}
+
+.confirm-bubble__btn.yes-btn:hover {
+    background: var(--color-sage-dark);
+    border-color: var(--color-sage-dark);
+}
+
+.confirm-bubble__btn.no-btn {
+    background: #ffffff;
+    border-color: var(--color-line);
+    color: #555555;
+}
+
+.confirm-bubble__btn.no-btn:hover {
+    background: #f3f4ef;
+    border-color: #bfc8b6;
+}
+
+/* =========================
+   반응형
+   ========================= */
+@media (max-width: 860px) {
+    .restaurant-toggle-group {
+        gap: 8px;
+    }
+
+    .restaurant-toggle-item {
+        flex: 1 1 calc(50% - 4px);
+    }
+
+    .restaurant-toggle-item span {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+@media (max-width: 560px) {
+    .restaurant-toggle-item {
+        flex: 1 1 100%;
+    }
+}

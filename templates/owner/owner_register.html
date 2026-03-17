@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>판매자 등록 | 흑백로그</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+    <div class="app-shell" style="max-width: 760px; margin: 40px auto; padding: 0 20px;">
+        <div class="sidebar" style="padding: 28px;">
+            <h1 style="margin-top: 0;">판매자 등록</h1>
+            <p style="color: #6f776d;">매장 정보를 입력해 흑백로그에 등록할 수 있습니다.</p>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div style="margin-bottom: 16px;">
+                        {% for message in messages %}
+                            <div style="padding: 10px 12px; border-radius: 8px; background: #f4f4f4; margin-bottom: 8px;">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('seller_register') }}">
+                <div style="display: grid; gap: 14px;">
+                    <input type="text" name="store_name" placeholder="상호명" class="search-input" />
+                    <input type="text" name="owner_name" placeholder="대표자명" class="search-input" />
+                    <input type="text" name="phone" placeholder="연락처" class="search-input" />
+                    <input type="text" name="address" placeholder="도로명 주소" class="search-input" />
+                    <select name="category_id" class="search-input" required>
+                        <option value="">카테고리 선택</option>
+                        {% for c in categories %}
+                        <option value="{{ c.restaurant_category_id }}">
+                            {{ c.restaurant_category_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <textarea name="description" placeholder="매장 소개" class="search-input" style="height: 140px; padding-top: 14px;"></textarea>
+
+                    <button
+                        type="submit"
+                        class="search-btn"
+                        onclick="return confirm('판매자로 등록 신청하시겠습니까?');">
+                    등록 신청하기
+                    </button> <!-- 이종민 "등록 신청하기"에 alert 추가 -->
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

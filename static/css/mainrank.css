@@ -1,0 +1,121 @@
+.activity-summary-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 0px;
+}
+
+.activity-summary-card {
+    background: linear-gradient(135deg, #93ad7c 0%, #87a56f 100%);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    cursor: pointer;
+}
+
+.activity-summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.activity-summary-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.activity-summary-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+    margin-left: 15px;
+}
+
+.activity-summary-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.activity-summary-progress-bar {
+    width: 100%;
+    max-width: 180px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.activity-summary-progress-fill {
+    height: 100%;
+    width: 68%;
+    background: #ffffff;
+    border-radius: 999px;
+}
+
+.activity-summary-progress-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.activity-summary-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.activity-summary-stat {
+    height: 70px;
+    padding: 0px 10px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.activity-summary-label {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 8px;
+}
+
+.activity-summary-value {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #ffffff;
+}
+
+.activity-summary-badge {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #ffffff;
+    word-break: keep-all;
+}
+
+@media (max-width: 768px) {
+    .activity-summary-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .activity-summary-progress {
+        width: 100%;
+    }
+
+    .activity-summary-progress-bar {
+        max-width: none;
+    }
+}

@@ -1,0 +1,1637 @@
+/* =========================
+   1. 기본 설정
+========================= */
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #f6f7f3;
+    --panel: #ffffff;
+    --line: #d7dfb9;
+    --text: #1f241f;
+    --subtext: #6f776d;
+    --point: #8faa7a;
+    --point-dark: #6f8d59;
+    --chip: #f2f4ed;
+    --back: #eef0e9;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    --radius-xl: 24px;
+    --radius-lg: 18px;
+    --radius-md: 14px;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--back);
+    color: var(--text);
+    font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+}
+
+/* 브라우저별 스크롤바 숨김 */
+html,
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+/* 좌우 기본 여백 */
+body {
+    padding: 0 64px;
+}
+
+/* form 요소 기본 폰트 통일 */
+button,
+input,
+select {
+    font: inherit;
+}
+
+/* 이미지 아래 공백 제거 */
+img {
+    display: block;
+}
+
+/* 앱 전체 래퍼 */
+.app-shell {
+    min-height: 100vh;
+}
+
+/* =========================
+   2. TOPBAR
+========================= */
+/* 상단 바 전체
+   드롭다운이 아래로 펼쳐질 수 있게 overflow: visible 적용 */
+.topbar {
+    position: relative;
+    z-index: 5000;
+    overflow: visible;
+    min-height: 120px;
+    padding: 10px 28px 0px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(10px);
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 24px;
+
+    border-radius: 0 0 24px 24px;
+}
+
+/* 로고 영역 */
+.brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand-wrap a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* 메인 로고 크기 */
+#main_logo {
+    width: auto;
+    height: 84px;
+    object-fit: contain;
+}
+
+/* =========================
+   3. TOPBAR ACTIONS
+========================= */
+/* 우측 상단 액션 영역
+   프로필 드롭다운 레이어가 본문보다 위로 오도록 z-index 부여 */
+.topbar-actions {
+    position: relative;
+    z-index: 200;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-self: end;
+}
+
+/* 공통 버튼 베이스 */
+.ghost-btn,
+.icon-btn,
+.search-btn,
+.sort-chip {
+    border: 1px solid var(--line);
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 공통 hover 효과 */
+.ghost-btn:hover,
+.icon-btn:hover,
+.search-btn:hover,
+.sort-chip:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+/* 로그인 글자 버튼 */
+.ghost-btn {
+    height: 44px;
+    padding: 0 18px;
+    border-radius: 12px;
+    font-weight: 600;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    line-height: 1;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+/* 햄버거 버튼 */
+.icon-btn {
+    width: 42px;
+    height: 42px;
+    border: 1.5px solid #cfd8b4;
+    border-radius: 12px;
+    background: #fffef9;
+    color: #5f6f52;
+    font-size: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.icon-btn:hover {
+    background: #eef3e3;
+}
+
+/* 로그인 링크 */
+.login-link {
+    text-decoration: none;
+    color: #2f3b2f;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+/* 예전 프로필 버튼 구조를 쓸 때 대비 */
+.profile-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+/* 예전 프로필 이미지 구조를 쓸 때 대비 */
+.profile-btn img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #6b8f5a;
+    object-fit: cover;
+}
+
+/* =========================
+   4. 상단 닉네임 배지 / 프로필 칩
+========================= */
+/* 작은 환영 배지 */
+.user-welcome-badge {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+
+    min-width: 86px;
+    padding: 6px 12px;
+
+    background: linear-gradient(135deg, #f5f8ef 0%, #edf3e3 100%);
+    border: 1px solid #d6e1c4;
+    border-radius: 14px;
+    box-shadow: 0 4px 10px rgba(111, 135, 101, 0.08);
+}
+
+/* 배지 상단 작은 설명 글자 */
+.user-welcome-label {
+    margin-bottom: 2px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #97a58a;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+}
+
+/* 사용자 닉네임 */
+.user-welcome {
+    font-size: 15px;
+    font-weight: 800;
+    color: #5f7454;
+    line-height: 1.2;
+    letter-spacing: -0.2px;
+}
+
+/* 프로필 버튼 + 드롭다운 묶음 */
+.profile-menu-wrap {
+    position: relative;
+    z-index: 300;
+}
+
+/* 닉네임 + 아바타 칩 */
+.user-profile-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 6px 8px 6px 14px;
+    background: #f6f8f1;
+    border: 1.5px solid #cfd8b4;
+    border-radius: 999px;
+
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(120, 140, 90, 0.08);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.user-profile-chip:hover {
+    background: #eef3e3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(120, 140, 90, 0.14);
+}
+
+/* 칩 안 닉네임 */
+.user-profile-chip__name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #5f6f52;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* 칩 안 동그란 프로필 영역 */
+.user-profile-chip__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    border: 1.5px solid #cfd8b4;
+    background: #ffffff;
+
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 프로필 이미지 */
+.user-profile-chip__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* =========================
+   5. 프로필 드롭다운
+========================= */
+/* 드롭다운 메뉴
+   z-index를 크게 주어 본문 카드/지도 위로 뜨게 설정 */
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 9999;
+
+    min-width: 150px;
+    padding: 8px;
+
+    background: #fffef9;
+    border: 1px solid #d8dfc2;
+    border-radius: 14px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+
+    display: none;
+}
+
+/* JS로 show 클래스 붙으면 열림 */
+.profile-dropdown.show {
+    display: block;
+}
+
+/* 드롭다운 내부 항목 */
+.profile-dropdown__item {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+
+    text-decoration: none;
+    color: #5f6f52;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: background 0.2s ease;
+}
+
+.profile-dropdown__item:hover {
+    background: #f3f6ea;
+}
+
+/* 위험 액션 (로그아웃 등) */
+.profile-dropdown__item--danger {
+    color: #c84d4d;
+}
+
+.profile-dropdown__item--danger:hover {
+    background: #fff1f1;
+}
+
+/* =========================
+   6. 사이드 드로어 배경
+========================= */
+/* 드로어가 열릴 때 뒤 배경 어둡게 */
+.side-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+
+    background: rgba(20, 24, 20, 0.16);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.24s ease;
+    z-index: 6000;
+}
+
+.side-drawer-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* =========================
+   7. 사이드 드로어
+========================= */
+/* 오른쪽에서 슬라이드로 나오는 메뉴 */
+.side-drawer {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 1110;
+
+    width: 320px;
+    max-width: calc(100vw - 28px);
+    height: calc(100vh - 36px);
+
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    z-index: 6100;
+    transform: translateX(calc(100% + 28px)) scale(0.98);
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+        transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.2s ease;
+}
+
+.side-drawer.is-open {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 드로어 상단 */
+.side-drawer__header {
+    position: relative;
+    padding: 20px 18px 18px;
+    background: linear-gradient(180deg, #ffffff, #fbfcf8);
+    border-bottom: 1px solid var(--line);
+}
+
+/* 닫기 버튼 */
+.side-drawer__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 34px;
+    height: 34px;
+
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: white;
+    color: var(--subtext);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.side-drawer__close:hover {
+    background: #f7faf2;
+    color: var(--text);
+    transform: translateY(-1px);
+}
+
+/* 드로어 프로필 영역
+   a 태그로 써도 자연스럽게 보이게 설정 */
+.side-drawer__profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px;
+    padding-top: 8px;
+
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    border-radius: 16px;
+    transition: background-color 0.2s ease;
+}
+
+.side-drawer__profile:hover {
+    background-color: #f5f6ef;
+}
+
+/* 드로어 안 큰 프로필 원 */
+.side-drawer__avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 999px;
+    border: 2px solid var(--point);
+
+    background: var(--chip);
+    color: var(--point-dark);
+    box-shadow: inset 0 0 0 4px #fff;
+
+    display: grid;
+    place-items: center;
+    font-size: 32px;
+}
+
+/* 드로어 안 사용자 이름 */
+.side-drawer__name {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+/* 드로어 본문 스크롤 영역 */
+.side-drawer__body {
+    height: calc(100% - 140px);
+    overflow-y: auto;
+    padding: 14px;
+    background: #fcfdf9;
+}
+
+/* 드로어 메뉴 리스트 */
+.side-drawer__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 드로어 아이템 공통 */
+.side-drawer__item,
+.side-drawer__subitem {
+    width: 100%;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+/* 메인 메뉴 버튼/링크 */
+.side-drawer__item {
+    min-height: 52px;
+    padding: 0 14px;
+    border-radius: 16px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+}
+
+.side-drawer__item:hover {
+    background: white;
+    border-color: #e6ebde;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+/* 아이콘 영역 */
+.side-drawer__icon {
+    width: 22px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: var(--subtext);
+}
+
+/* 구분선 */
+.side-drawer__divider {
+    height: 1px;
+    margin: 16px 4px;
+    background: #e2e8d9;
+}
+
+/* 섹션 제목 */
+.side-drawer__section-title {
+    padding: 0 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--subtext);
+    font-weight: 700;
+}
+
+/* 서브 메뉴 목록 */
+.side-drawer__sublist {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* 서브 메뉴 항목 */
+.side-drawer__subitem {
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--subtext);
+}
+
+.side-drawer__subitem:hover {
+    background: white;
+    border-color: #e6ebde;
+    color: var(--text);
+}
+
+/* 드로어 열릴 때 body 스크롤 잠금 */
+body.drawer-open {
+    overflow: hidden;
+}
+
+/* =========================
+   8. SEARCH
+========================= */
+/* 검색 영역 전체 */
+.searchbar-section {
+    position: relative;
+    z-index: 5100;
+    overflow: visible;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+}
+
+/* 검색 컨트롤 정렬 */
+.searchbar-box {
+    position: relative;
+    z-index: 5200;
+    overflow: visible;
+    width: 100%;
+    max-width: 820px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 150px 180px minmax(220px, 1fr) 92px;
+    gap: 10px;
+    align-items: center;
+}
+
+/* select / input 공통 */
+.search-select,
+.search-input {
+    width: 100%;
+    height: 50px;
+    padding: 0 16px;
+
+    border: 1px solid #d9ddd0;
+    border-radius: 14px;
+    background: white;
+    outline: none;
+}
+
+/* 포커스 시 강조 */
+.search-input:focus,
+.search-select:focus {
+    border-color: var(--point);
+    box-shadow: 0 0 0 4px rgba(143, 170, 122, 0.12);
+}
+
+/* 키워드 입력창 */
+#keywordInput {
+    width: 100%;
+}
+
+/* 검색 버튼 */
+.search-btn {
+    height: 50px;
+    border-radius: 14px;
+    background: #171a16;
+    color: white;
+    border-color: #171a16;
+    font-weight: 700;
+}
+
+.search-input-wrap {
+    position: relative;
+    min-width: 220px;
+    z-index: 5300;
+    overflow: visible;
+}
+
+.search-suggestion-box {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    z-index: 99999;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+    max-height: 320px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.search-suggestion-empty {
+    padding: 14px 16px;
+    border-radius: 12px;
+    color: var(--subtext);
+    font-size: 14px;
+}
+
+.search-suggestion-item {
+    width: 100%;
+    border: none;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.search-suggestion-item:hover,
+.search-suggestion-item.active {
+    background: #f6f9f1;
+}
+
+.search-suggestion-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.search-suggestion-meta {
+    font-size: 13px;
+    color: var(--subtext);
+    line-height: 1.45;
+}
+
+.search-highlight,
+.search-suggestion-item mark {
+    background: rgba(143, 170, 122, 0.18);
+    color: inherit;
+    border-radius: 4px;
+    padding: 0 2px;
+}
+
+/* =========================
+   9. MAIN LAYOUT
+========================= */
+/* 본문 2단 레이아웃 */
+.content-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 420px minmax(0, 1fr);
+    gap: 18px;
+    padding: 10px 0;
+    height: calc(100vh - 156px);
+}
+
+/* 왼쪽 패널 / 오른쪽 지도 공통 */
+.sidebar,
+.map-panel {
+    min-height: 0;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow);
+}
+
+.sidebar {
+    overflow: hidden;
+}
+
+/* 지도보다 추천창이 위에 보이도록 map-panel 레이어를 낮춤 */
+.map-panel {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================
+   10. SIDEBAR
+========================= */
+/* 왼쪽 목록 패널 */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 사이드바 상단 */
+.sidebar-head {
+    padding: 18px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, #ffffff, #fbfcf8);
+}
+
+/* 상단 줄 */
+.sidebar-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* 룰렛 버튼 */
+.roulette-btn {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+    transition: all 0.2s ease;
+}
+
+.roulette-btn:hover {
+    transform: translateY(-1px) rotate(-8deg);
+    box-shadow: var(--shadow);
+    background: #f7faf2;
+}
+
+/* 비활성화 상태 */
+.roulette-btn:disabled,
+.roulette-result__confirm:disabled,
+.roulette-result__retry:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* 룰렛 카테고리 텍스트 */
+#rouletteCategory {
+    display: inline-block;
+    min-width: 120px;
+}
+
+/* 룰렛 회전 중 강조 */
+.roulette-spinning {
+    animation: roulettePulse 0.18s ease-in-out infinite;
+}
+
+@keyframes roulettePulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.75;
+    }
+    50% {
+        transform: scale(1.06);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.75;
+    }
+}
+
+/* 룰렛 버튼 안 SVG */
+.roulette-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* 룰렛 결과 카드 */
+.roulette-result {
+    position: relative;
+    margin-top: 16px;
+    padding: 14px;
+
+    border: 1px solid #dce6d3;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #f8fbf4, #eef5e8);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* 룰렛 슬롯 영역 */
+.roulette-slot {
+    position: relative;
+    width: 180px;
+    height: 42px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 4px;
+}
+
+/* 위아래 마스킹 레이어 */
+.roulette-slot::before,
+.roulette-slot::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.roulette-slot::before {
+    top: 0;
+}
+
+.roulette-slot::after {
+    bottom: 0;
+}
+
+/* 움직이는 트랙 */
+.roulette-slot__track {
+    width: 100%;
+    transform: translateY(0);
+    transition: transform 0.12s linear;
+    will-change: transform;
+}
+
+/* 슬롯 아이템 */
+.roulette-slot__item {
+    height: 42px;
+    line-height: 42px;
+    padding: 0 10px;
+
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    user-select: none;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 룰렛 결과 닫기 버튼 */
+.roulette-result__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 28px;
+    height: 28px;
+
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #6f776d;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+    transition: all 0.2s ease;
+}
+
+.roulette-result__close:hover {
+    background: white;
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+
+/* 결과 배지 */
+.roulette-result__badge {
+    display: inline-flex;
+    align-items: center;
+
+    height: 28px;
+    padding: 0 10px;
+    margin-bottom: 10px;
+
+    border-radius: 999px;
+    background: var(--point);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* 결과 본문 */
+.roulette-result__body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+/* 세로 정렬 버전 */
+.roulette-result__body--stack {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* 결과 텍스트 */
+.roulette-result__text {
+    min-width: 0;
+}
+
+.roulette-result__text strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.roulette-result__text p {
+    margin: 6px 0 6px;
+    font-size: 14px;
+    color: var(--subtext);
+}
+
+.roulette-result__text span {
+    display: block;
+    font-size: 13px;
+    color: #4f5b49;
+    line-height: 1.5;
+}
+
+/* 결과 버튼들 */
+.roulette-result__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* 공통 결과 버튼 */
+.roulette-result__confirm,
+.roulette-result__retry {
+    height: 38px;
+    padding: 0 14px;
+
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* 확정 버튼 */
+.roulette-result__confirm {
+    background: var(--point);
+    color: white;
+    border-color: var(--point);
+}
+
+/* 다시 돌리기 버튼 */
+.roulette-result__retry {
+    background: white;
+    color: var(--text);
+}
+
+.roulette-result__confirm:hover,
+.roulette-result__retry:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+/* 정렬 칩 리스트 */
+.sort-chip-row {
+    display: flex;
+    gap: 11px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* 정렬 칩 */
+.sort-chip {
+    height: 38px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--chip);
+    border-color: transparent;
+    font-weight: 600;
+}
+
+/* 활성 정렬 칩 */
+.sort-chip.active {
+    background: var(--point);
+    color: white;
+    border-color: var(--point);
+}
+
+/* 음식점 리스트 */
+.restaurant-list {
+    overflow-y: auto;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* 로딩 박스 */
+.loading-box {
+    padding: 24px;
+    border-radius: 16px;
+    background: #f8faf4;
+    color: var(--subtext);
+    text-align: center;
+    border: 1px dashed #dbe2d1;
+}
+
+/* 음식점 카드 */
+.restaurant-card {
+    display: grid;
+    grid-template-columns: 38px 110px 1fr;
+    gap: 14px;
+
+    padding: 14px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.restaurant-card.is-active {
+    box-shadow: 0 0 0 3px rgba(143, 170, 122, 0.35), 0 12px 30px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.rank-badge {
+    width: 38px;
+    height: 38px;
+    margin-top: 4px;
+
+    border-radius: 999px;
+    background: #111;
+    color: white;
+    font-weight: 800;
+
+    display: grid;
+    place-items: center;
+}
+
+/* 음식점 썸네일 */
+.card-thumb {
+    width: 110px;
+    height: 110px;
+    border-radius: 16px;
+    object-fit: cover;
+    background: #eef1e8;
+}
+
+/* 카드 본문 */
+.card-body {
+    min-width: 0;
+}
+
+/* 카드 제목 줄 */
+.card-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+/* 카드 제목 */
+.card-title {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* 평점/점수 */
+.card-score {
+    flex-shrink: 0;
+    font-weight: 700;
+    color: var(--point-dark);
+}
+
+/* 카드 메타 정보 */
+.card-meta {
+    margin-top: 8px;
+    color: var(--subtext);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* 주소 한 줄 처리 */
+.card-address {
+    margin-top: 6px;
+    font-size: 13px;
+    color: #7e857b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 통계 pill 묶음 */
+.card-stats {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* pill 스타일 */
+.stat-pill {
+    min-height: 36px;
+    padding: 0 12px;
+    border-radius: 12px;
+
+    display: inline-flex;
+    align-items: center;
+
+    background: #f2f6ed;
+    color: #44513e;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1px solid #dce6d3;
+}
+
+/* =========================
+   11. MAP PANEL
+========================= */
+/* 지도 패널 */
+.map-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 지도 배경 캔버스 */
+.map-canvas {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    overflow: hidden;
+
+    background:
+        linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        #f4f5f1;
+    background-size: 40px 40px;
+}
+
+/* 장식용 지도 패턴 */
+.map-grid {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 30% 32%, rgba(143, 170, 122, 0.18) 0 38px, transparent 39px),
+        radial-gradient(circle at 62% 60%, rgba(143, 170, 122, 0.18) 0 30px, transparent 31px),
+        radial-gradient(circle at 78% 72%, rgba(143, 170, 122, 0.18) 0 40px, transparent 41px);
+}
+
+.naver-map {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.map-markers {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: none;
+}
+
+/* 지도 마커 */
+.map-marker {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+
+    border-radius: 18px 18px 18px 0;
+    transform: rotate(-45deg);
+    background: var(--point);
+    border: 2px solid var(--point-dark);
+    box-shadow: var(--shadow);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-weight: 800;
+}
+
+/* 마커 안 숫자/텍스트 */
+.map-marker > span {
+    transform: rotate(45deg);
+    font-size: 12px;
+}
+
+/* 가운데 안내 카드 */
+.map-center-badge {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+
+    padding: 16px 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+}
+
+.map-center-badge strong {
+    display: block;
+    font-size: 18px;
+}
+
+.map-center-badge span {
+    display: block;
+    margin-top: 6px;
+    color: var(--subtext);
+    font-size: 13px;
+}
+
+/* =========================
+   12. MAP NOTICE
+========================= */
+/* 지도 위 상단 공지 박스 */
+.map-notice {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    z-index: 20;
+
+    width: min(1000px, calc(100% - 36px));
+    min-height: 62px;
+    padding: 14px 16px;
+    padding-right: 62px;
+
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+
+    transition: all 0.25s ease;
+}
+
+/* 공지 내용 */
+.map-notice__content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* 공지 제목 */
+.map-notice__title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+/* 공지 본문 */
+.map-notice__text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--subtext);
+}
+
+/* 공지 접기/열기 버튼 */
+.map-notice__toggle {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+
+    width: 34px;
+    height: 34px;
+    padding: 0;
+
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: white;
+    cursor: pointer;
+
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+.map-notice__toggle::before {
+    content: "<";
+    display: block;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1;
+}
+
+.map-notice__toggle:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* 접힘 상태에서 보이는 이미지 */
+.map-notice__toggle-img {
+    display: none;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* 공지가 접힌 상태 */
+.map-notice.collapsed {
+    width: 46px;
+    height: 46px;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+
+    border-radius: 999px;
+    background: var(--point);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.map-notice.collapsed .map-notice__content {
+    display: none;
+}
+
+.map-notice.collapsed .map-notice__toggle {
+    position: static;
+    transform: none;
+    width: 46px;
+    height: 46px;
+    border: none;
+    background: var(--point);
+    border-radius: 999px;
+}
+
+.map-notice.collapsed .map-notice__toggle::before {
+    display: none;
+}
+
+.map-notice.collapsed .map-notice__toggle-img {
+    display: block;
+    width: 26px;
+    height: 26px;
+}
+
+.map-notice.collapsed .map-notice__toggle:hover {
+    transform: scale(1.05);
+}
+
+/* =========================
+   13. EMPTY / FOOTER
+========================= */
+/* 빈 상태 안내 박스 */
+.empty-box {
+    padding: 30px;
+    border: 1px dashed #dbe2d1;
+    border-radius: 18px;
+    background: #fbfcf8;
+    color: var(--subtext);
+    text-align: center;
+}
+
+/* 푸터 */
+.site-footer {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
+    padding: 22px 28px;
+
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+
+/* 푸터 내부 정렬 */
+.footer-inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+/* 브랜드 영역 */
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 180px;
+}
+
+.footer-brand strong {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.footer-brand span {
+    font-size: 13px;
+    color: var(--subtext);
+}
+
+/* 푸터 정보 영역 */
+.footer-info {
+    flex: 1;
+    min-width: 280px;
+}
+
+.footer-info p {
+    margin: 0 0 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--subtext);
+}
+
+.footer-info p:last-child {
+    margin-bottom: 0;
+}
+
+.empty-box-login-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #5f7a61;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.empty-box-login-link:hover {
+    text-decoration: underline;
+}
+
+#detailRestaurantName {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.favorite-star-btn {
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    color: #b8b8b8;
+    transition: transform 0.15s ease, color 0.15s ease;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.favorite-star-btn:hover {
+    transform: scale(1.08);
+}
+
+.favorite-star-btn.active {
+    color: #f2b600;
+}
+
+/* =========================
+   14. RESPONSIVE
+========================= */
+@media (max-width: 1400px) {
+    body {
+        padding: 0 32px;
+    }
+
+    .topbar {
+        grid-template-columns: auto minmax(320px, 1fr) auto;
+    }
+
+    .content-grid {
+        grid-template-columns: 380px minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    body {
+        padding: 0 20px;
+    }
+
+    .topbar {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 16px;
+        padding: 20px;
+    }
+
+    .brand-wrap,
+    .topbar-actions {
+        justify-self: center;
+    }
+
+    .searchbar-box {
+        max-width: 100%;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .content-grid {
+        grid-template-columns: 340px minmax(0, 1fr);
+        height: calc(100vh - 220px);
+    }
+
+    .map-notice {
+        width: min(760px, calc(100% - 36px));
+    }
+}
+
+@media (max-width: 900px) {
+    body {
+        padding: 0 14px;
+    }
+
+    #main_logo {
+        height: 70px;
+    }
+
+    .searchbar-box {
+        grid-template-columns: 1fr;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .sidebar {
+        min-height: 500px;
+    }
+
+    .map-panel {
+        min-height: 560px;
+    }
+
+    .map-notice {
+        width: calc(100% - 28px);
+        top: 14px;
+        left: 14px;
+    }
+}

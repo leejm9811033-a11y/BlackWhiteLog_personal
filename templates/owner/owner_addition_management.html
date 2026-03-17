@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>레스토랑 추가 등록</title>
+</head>
+<body>
+    <h1>레스토랑 추가 등록 페이지</h1>
+
+    <form method="post" action="{{ url_for('owner_addtion_management') }}">
+        <div>
+            <label>레스토랑명</label>
+            <input type="text" name="restaurant_name" required>
+        </div>
+
+        <div>
+            <label>카테고리</label>
+            <input type="text" name="category_name">
+        </div>
+
+        <div>
+            <label>주소</label>
+            <input type="text" name="road_address">
+        </div>
+
+        <div>
+            <label>전화번호</label>
+            <input type="text" name="phone">
+        </div>
+
+        <div>
+            <label>설명</label>
+            <textarea name="description"></textarea>
+        </div>
+
+        <button type="submit">추가 등록</button>
+    </form>
+</body>
+</html>

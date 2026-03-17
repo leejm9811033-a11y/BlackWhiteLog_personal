@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>즐겨찾기</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mypage.css') }}">
+</head>
+<body>
+    <div class="mypage-detail-page">
+        <div class="mypage-detail-container">
+            <div class="mypage-detail-header">
+                <div>
+                    <h1>즐겨찾기</h1>
+                    <p>{{ user_nickname }}님의 즐겨찾기 목록입니다.</p>
+                </div>
+                <a href="{{ url_for('mypage.mypage') }}" class="mypage-back-btn">마이페이지로</a>
+            </div>
+
+            <div class="mypage-detail-list">
+            {% if favorites %}
+                {% for item in favorites %}
+                    <div class="mypage-detail-card favorite-card">
+                        <div class="mypage-detail-top">
+                            <div class="favorite-title-row">
+                                <strong>{{ item.restaurant_name }}</strong>
+                                <span class="favorite-category-badge">{{ item.category }}</span>
+                            </div>
+
+                            <form method="POST"
+                                action="{{ url_for('mypage.delete_favorite') }}"
+                                onsubmit="return confirm('이 즐겨찾기를 삭제할까요?');"
+                                class="favorite-delete-form">
+                                <input type="hidden" name="favorite_id" value="{{ item.favorite_id }}">
+                                <button type="submit" class="favorite-delete-btn">삭제</button>
+                            </form>
+                        </div>
+
+                        <div class="mypage-detail-meta">
+                            <span>{{ item.region }}</span>
+                            <span>{{ item.created_at }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="mypage-empty">즐겨찾기한 음식점이 없습니다.</div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

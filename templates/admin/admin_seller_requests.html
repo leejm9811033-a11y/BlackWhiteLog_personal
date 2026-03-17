@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>판매자 신청 관리</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-shell" style="max-width: 1200px; margin: 40px auto; padding: 20px;">
+        <h1>판매자 신청 관리</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div style="margin-bottom: 16px;">
+                    {% for message in messages %}
+                        <div style="padding: 10px 12px; border-radius: 8px; background: #f4f4f4; margin-bottom: 8px;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if items %}
+            <table border="1" cellpadding="10" cellspacing="0" style="width:100%; background:#fff; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th>신청번호</th>
+                        <th>신청자ID</th>
+                        <th>신청자명</th>
+                        <th>상호명</th>
+                        <th>주소</th>
+                        <th>연락처</th>
+                        <th>카테고리</th>
+                        <th>소개</th>
+                        <th>상태</th>
+                        <th>신청일</th>
+                        <th>처리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.request_id }}</td>
+                        <td>{{ item.owner_id }}</td>
+                        <td>{{ item.owner_name or '-' }}</td>
+                        <td>{{ item.store_name }}</td>
+                        <td>{{ item.road_address or '-' }}</td>
+                        <td>{{ item.phone or '-' }}</td>
+                        <td>{{ item.category_name or '공란' }}</td>
+                        <td>{{ item.description or '-' }}</td>
+                        <td>{{ item.status }}</td>
+                        <td>{{ item.created_at }}</td>
+                        <td>
+                            {% if item.status == 'PENDING' %}
+                                <form method="POST"
+                                    action="{{ url_for('admin.approve_seller_request', request_id=item.request_id) }}"
+                                    style="display:inline;">
+                                    <button type="submit">승인</button>
+                                </form>
+
+                                <form method="POST"
+                                    action="{{ url_for('admin.reject_seller_request', request_id=item.request_id) }}"
+                                    style="display:inline; margin-left: 6px;">
+                                    <button type="submit">거절</button>
+                                </form>
+                            {% else %}
+                                <span>-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>대기 중인 판매자 신청이 없습니다.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
