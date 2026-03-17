@@ -696,6 +696,7 @@ def insert_owner_p(user_id):
     conn = get_connection()
     try:
         with conn.cursor() as cursor:
+            # 이미 owner가 있으면 기존 owner_id 반환
             cursor.execute("""
                 SELECT owner_id
                 FROM owners
@@ -707,6 +708,7 @@ def insert_owner_p(user_id):
             if existing_owner:
                 return True, existing_owner["owner_id"]
 
+            # users 테이블에서 owner 생성에 필요한 정보 조회
             cursor.execute("""
                 SELECT
                     user_id,

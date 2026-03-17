@@ -203,8 +203,9 @@ def seller_register():
         return redirect(url_for("seller_register"))
 
     flash(f"판매자 등록 신청에 실패했습니다: {result}")
-    return render_template("owner/owner_register.html", categories=categories)
+    return render_template("owner/owner_register.html")
+
 
 
 if __name__ == "__main__":
-    app.run(debug=os.getenv("FLASK_DEBUG", "True") == "True") # asdffadsfdasadf
+    app.run(debug=os.getenv("FLASK_DEBUG", "True") == "True")
