@@ -3,7 +3,8 @@ from flask import Flask, jsonify, render_template, request, session, url_for, fl
 # .env 파일에 저장한 환경변수 불러오기
 from extensions import mail
 from dotenv import load_dotenv
-# 운영체제 환경변수 접근용
+# 운영체제 환경변수 접근용       # 3월 18일 오후 9시
+
 import os
 
 from routes.admin.admin_db import create_restaurant_request
